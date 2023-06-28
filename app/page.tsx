@@ -12,7 +12,7 @@ export default function Home() {
 	return (
 		<div className='z-0 w-screen h-screen overflow-scroll text-white snap-y snap-mandatory scroll-smooth '>
 			<Head>
-				<title>Peter's Portfolio</title>
+				<title>{`Peter's Portfolio`}</title>
 			</Head>
 
 			<Header />

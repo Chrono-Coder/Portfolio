@@ -14,9 +14,9 @@ export default function ContactMe({}: Props) {
 
 			<div className='flex flex-col space-y-10'>
 				<h4 className='text-4xl font-semibold text-center'>
-					I've got what you need.{" "}
+					{`I've got what you need. `}
 					<span className='underline decoration-primary/70'>
-						Let's Talk!
+						{`Let's Talk!`}
 					</span>
 				</h4>
 				<div className='space-y-10'>
