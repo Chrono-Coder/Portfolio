@@ -3,9 +3,22 @@ import React from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { PhoneIcon, MapPinIcon, EnvelopeIcon } from "@heroicons/react/24/solid";
+import { useForm, SubmitHandler } from "react-hook-form";
+import sendEmail from "@/pipes/sendEmail";
+import { Inputs } from "@/typings";
+
 type Props = {};
 
 export default function ContactMe({}: Props) {
+	const { register, handleSubmit, reset } = useForm<Inputs>();
+	const onSubmit: SubmitHandler<Inputs> = (formData) => {
+		sendEmail(formData).then((res) => {
+			console.log(res);
+			reset();
+			//Make a toast
+		});
+	};
+
 	return (
 		<div className='relative flex flex-col items-center h-screen px-10 mx-auto text-center max-w-7xl justify-evenly md:text-left md:flex-row '>
 			<h3 className='font-semibold absolute top-24 uppercase tracking-[20px] text-gray-500 text-2xl'>
@@ -13,7 +26,7 @@ export default function ContactMe({}: Props) {
 			</h3>
 
 			<div className='flex flex-col space-y-10'>
-				<h4 className='text-4xl font-semibold text-center'>
+				<h4 className='flex flex-col text-4xl font-semibold text-center'>
 					{`I've got what you need. `}
 					<span className='underline decoration-primary/70'>
 						{`Let's Talk!`}
@@ -26,7 +39,7 @@ export default function ContactMe({}: Props) {
 					</div>
 					<div className='flex items-center justify-center space-x-5'>
 						<EnvelopeIcon className='text-primary h-7 w-7 animate-pulse' />
-						<p className='text-2xl'>peterjohn.hein@gmail.com</p>
+						<p className='text-2xl'>hein.peterjohn@gmail.com</p>
 					</div>
 					<div className='flex items-center justify-center space-x-5'>
 						<MapPinIcon className='text-primary h-7 w-7 animate-pulse' />
@@ -34,29 +47,34 @@ export default function ContactMe({}: Props) {
 					</div>
 				</div>
 
-				<form className='flex flex-col mx-auto gap-y-2 w-fit'>
+				<form
+					className='flex flex-col mx-auto gap-y-2 w-fit'
+					onSubmit={handleSubmit(onSubmit)}
+				>
 					<div className='flex space-x-2'>
 						<input
 							className='contactInput'
 							placeholder='Name'
 							type='text'
+							{...register("name")}
 						/>
 						<input
 							className='contactInput'
 							placeholder='Email'
 							type='email'
+							{...register("email")}
 						/>
 					</div>
 					<input
 						className='contactInput'
 						placeholder='Subject'
 						type='text'
+						{...register("subject")}
 					/>
 					<textarea
 						placeholder='Message'
 						className='contactInput'
-						name=''
-						id=''
+						{...register("message")}
 					/>
 					<button
 						type='submit'

@@ -17,7 +17,7 @@ export default function Projects({}: Props) {
 			<h3 className='font-semibold absolute top-24 uppercase tracking-[20px] text-gray-500 text-2xl'>
 				Projects
 			</h3>
-			<div className='relative z-20 flex w-full overflow-x-scroll overflow-y-hidden pt-28 snap-x snap-mandatory'>
+			<div className='relative z-20 flex w-full overflow-x-scroll overflow-y-hidden pt-28 snap-x snap-mandatory scrollbar-thin scrollbar-track-gray-400/20 scrollbar-thumb-primary/80'>
 				{projects.map((project, index) => (
 					<div
 						key={project}

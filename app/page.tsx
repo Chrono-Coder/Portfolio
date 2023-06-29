@@ -7,10 +7,9 @@ import Skills from "@/components/Skills";
 import WorkExperience from "@/components/WorkExperience";
 import Head from "next/head";
 import Image from "next/image";
-
 export default function Home() {
 	return (
-		<div className='z-0 w-screen h-screen overflow-scroll text-white snap-y snap-mandatory scroll-smooth '>
+		<div className='z-0 w-screen h-screen overflow-x-hidden overflow-y-scroll text-white snap-y snap-mandatory scroll-smooth scrollbar-thin scrollbar-track-gray-400/20 scrollbar-thumb-primary/80'>
 			<Head>
 				<title>{`Peter's Portfolio`}</title>
 			</Head>
