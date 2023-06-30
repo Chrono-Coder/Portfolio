@@ -40,44 +40,6 @@ const fetchData = async () => {
 			fetchSocialMedias(),
 		]);
 
-	// let response = await fetch(
-	// 	process.env.NEXT_PUBLIC_BASE_URL + "/api/pageInfo",
-	// 	{
-	// 		next: { revalidate: revalidateTime },
-	// 	}
-	// );
-	// let data = await response.json();
-	// const pageInfo: PageInfo = data.pageInfo;
-	// response = await fetch(
-	// 	process.env.NEXT_PUBLIC_BASE_URL + "/api/experiences",
-	// 	{
-	// 		next: { revalidate: revalidateTime },
-	// 	}
-	// );
-	// data = await response.json();
-	// const experiences: Experience[] = data.experiences;
-	// response = await fetch(process.env.NEXT_PUBLIC_BASE_URL + "/api/projects", {
-	// 	next: { revalidate: revalidateTime },
-	// });
-	// data = await response.json();
-	// const projects: Project[] = data.projects;
-	// response = await fetch(
-	// 	process.env.NEXT_PUBLIC_BASE_URL + "/api/technologies",
-	// 	{
-	// 		next: { revalidate: revalidateTime },
-	// 	}
-	// );
-	// data = await response.json();
-	// const technologies: Technology[] = data.technologies;
-	// response = await fetch(
-	// 	process.env.NEXT_PUBLIC_BASE_URL + "/api/socialMedias",
-	// 	{
-	// 		next: { revalidate: revalidateTime },
-	// 	}
-	// );
-	// data = await response.json();
-	// const socialMedias: SocialMedia[] = data.socialMedias;
-
 	return {
 		pageInfo,
 		experiences,
@@ -88,25 +50,27 @@ const fetchData = async () => {
 };
 
 export default function Home() {
-	// const {
-	// 	socialMedias,
-	// 	pageInfo,
-	// 	experiences,
-	// 	projects,
-	// 	technologies,
-	// }: Props = await fetchData();
 	const [socialMedias, setSocialMedias] = useState<SocialMedia[]>([]);
+	const [pageInfo, setPageInfo] = useState<PageInfo>({} as PageInfo);
+	const [experiences, setExperiences] = useState<Experience[]>([]);
+	const [projects, setProjects] = useState<Project[]>([]);
+	const [technologies, setTechnologies] = useState<Technology[]>([]);
+
 	useEffect(() => {
 		fetchData().then((data) => {
 			console.log(data);
 			setSocialMedias(data.socialMedias);
+			setPageInfo(data.pageInfo);
+			setExperiences(data.experiences);
+			setProjects(data.projects);
+			setTechnologies(data.technologies);
 		});
 	}, []);
 
 	return (
 		<div className='z-0 w-screen h-screen overflow-x-hidden overflow-y-scroll text-white snap-y snap-mandatory scroll-smooth scrollbar-thin scrollbar-track-gray-400/20 scrollbar-thumb-primary/80'>
 			<Header socialMedias={socialMedias} />
-			{/* <section id='hero' className='snap-start '>
+			<section id='hero' className='snap-start '>
 				<Hero pageInfo={pageInfo} />
 			</section>
 			<section id='about' className='snap-center'>
@@ -130,7 +94,7 @@ export default function Home() {
 					phoneNumber={pageInfo.phoneNumber}
 					address={pageInfo.address}
 				/>
-			</section> */}
+			</section>
 		</div>
 	);
 }
