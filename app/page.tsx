@@ -18,6 +18,7 @@ import fetchProjects from "@/pipes/fetchProjects";
 import fetchTechnologies from "@/pipes/fetchTechnologies";
 import fetchSocialMedias from "@/pipes/fetchSocialMedias";
 import { urlFor } from "@/util/sanity";
+import { revalidateTime } from "@/util/helper";
 
 type Props = {
 	pageInfo: PageInfo;
@@ -28,11 +29,47 @@ type Props = {
 };
 
 const fetchData = async () => {
-	const pageInfo: PageInfo = await fetchPageInfo();
-	const experiences: Experience[] = await fetchExperiences();
-	const projects: Project[] = await fetchProjects();
-	const technologies: Technology[] = await fetchTechnologies();
-	const socialMedias: SocialMedia[] = await fetchSocialMedias();
+	// const experiences: Experience[] = await fetchExperiences();
+	// const projects: Project[] = await fetchProjects();
+	// const technologies: Technology[] = await fetchTechnologies();
+	// const socialMedias: SocialMedia[] = await fetchSocialMedias();
+	let response = await fetch(
+		process.env.NEXT_PUBLIC_BASE_URL + "/api/pageInfo",
+		{
+			next: { revalidate: revalidateTime },
+		}
+	);
+	let data = await response.json();
+	const pageInfo: PageInfo = data.pageInfo;
+	response = await fetch(
+		process.env.NEXT_PUBLIC_BASE_URL + "/api/experiences",
+		{
+			next: { revalidate: revalidateTime },
+		}
+	);
+	data = await response.json();
+	const experiences: Experience[] = data.experiences;
+	response = await fetch(process.env.NEXT_PUBLIC_BASE_URL + "/api/projects", {
+		next: { revalidate: revalidateTime },
+	});
+	data = await response.json();
+	const projects: Project[] = data.projects;
+	response = await fetch(
+		process.env.NEXT_PUBLIC_BASE_URL + "/api/technologies",
+		{
+			next: { revalidate: revalidateTime },
+		}
+	);
+	data = await response.json();
+	const technologies: Technology[] = data.technologies;
+	response = await fetch(
+		process.env.NEXT_PUBLIC_BASE_URL + "/api/socialMedias",
+		{
+			next: { revalidate: revalidateTime },
+		}
+	);
+	data = await response.json();
+	const socialMedias: SocialMedia[] = data.socialMedias;
 
 	return {
 		pageInfo,
