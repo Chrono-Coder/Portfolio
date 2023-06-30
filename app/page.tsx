@@ -14,6 +14,8 @@ import {
 } from "@/typings";
 import { groq } from "next-sanity";
 import { sanityClient } from "@/util/sanity";
+import { ChevronUpIcon } from "@heroicons/react/24/solid";
+import Link from "next/link";
 
 type Props = {
 	pageInfo: PageInfo;
@@ -108,6 +110,11 @@ export default async function Home() {
 					address={pageInfo.address}
 				/>
 			</section>
+			<Link href='#hero'>
+				<footer className='sticky w-full cursor-pointer bottom-5'>
+					<ChevronUpIcon className='w-10 h-10 mx-auto text-gray-300 transition-opacity duration-200 opacity-20 hover:opacity-80' />
+				</footer>
+			</Link>
 		</div>
 	);
 }
