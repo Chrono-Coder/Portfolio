@@ -28,6 +28,7 @@ export default function Hero({ pageInfo }: Props) {
 				src={urlFor(pageInfo?.heroImage).url()}
 				width={150}
 				height={150}
+				priority
 				alt='hero'
 				className='relative rounded-full w-[150px] h-[150px] mx-auto object-cover '
 			/>

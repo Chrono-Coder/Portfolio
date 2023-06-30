@@ -1,4 +1,4 @@
-import { NextRequest } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { groq } from "next-sanity";
 import { sanityClient } from "@/util/sanity";
 import { Experience } from "@/typings";
@@ -11,14 +11,20 @@ const query = groq`*[_type == "experience"] {
 export async function GET(req: NextRequest) {
 	try {
 		const experiences: Experience[] = await sanityClient.fetch(query);
-		return new Response(JSON.stringify({ experiences }), {
-			headers: { "content-type": "application/json" },
-			status: 200,
-		});
+		return (
+			NextResponse.json(experiences),
+			{
+				headers: { "content-type": "application/json" },
+				status: 200,
+			}
+		);
 	} catch (err) {
-		return new Response(JSON.stringify({ err }), {
-			headers: { "content-type": "application/json" },
-			status: 500,
-		});
+		return (
+			NextResponse.json(err),
+			{
+				headers: { "content-type": "application/json" },
+				status: 500,
+			}
+		);
 	}
 }

@@ -51,6 +51,8 @@ export default async function Home() {
 		projects,
 		technologies,
 	}: Props = await fetchData();
+	//dummy data
+
 	return (
 		<div className='z-0 w-screen h-screen overflow-x-hidden overflow-y-scroll text-white snap-y snap-mandatory scroll-smooth scrollbar-thin scrollbar-track-gray-400/20 scrollbar-thumb-primary/80'>
 			<Header socialMedias={socialMedias} />
