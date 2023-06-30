@@ -7,17 +7,14 @@ const query = groq`*[_type == "socialMedia"]`;
 export async function GET(req: NextRequest) {
 	try {
 		const socialMedias: SocialMedia[] = await sanityClient.fetch(query);
-		return NextResponse.json(socialMedias, {
+		return new Response(JSON.stringify({ socialMedias }), {
 			headers: { "content-type": "application/json" },
 			status: 200,
 		});
 	} catch (error) {
-		return (
-			NextResponse.json(error),
-			{
-				headers: { "content-type": "application/json" },
-				status: 500,
-			}
-		);
+		return new Response(JSON.stringify({ error }), {
+			headers: { "content-type": "application/json" },
+			status: 500,
+		});
 	}
 }

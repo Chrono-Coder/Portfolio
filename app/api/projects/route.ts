@@ -10,20 +10,14 @@ const query = groq`*[_type == "project"] {
 export async function GET(req: NextRequest) {
 	try {
 		const projects: Project[] = await sanityClient.fetch(query);
-		return (
-			NextResponse.json(projects),
-			{
-				headers: { "content-type": "application/json" },
-				status: 200,
-			}
-		);
+		return new Response(JSON.stringify({ projects }), {
+			headers: { "content-type": "application/json" },
+			status: 200,
+		});
 	} catch (err) {
-		return (
-			NextResponse.json(err),
-			{
-				headers: { "content-type": "application/json" },
-				status: 500,
-			}
-		);
+		return new Response(JSON.stringify({ err }), {
+			headers: { "content-type": "application/json" },
+			status: 500,
+		});
 	}
 }

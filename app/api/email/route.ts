@@ -1,6 +1,17 @@
 import { NextRequest, NextResponse } from "next/server";
 import { Inputs } from "@/typings";
 
+export async function GET(req: NextRequest) {
+	const { searchParams } = new URL(req.url);
+	const mysearchparam = searchParams.get("mysearchparam");
+
+	return new Response(JSON.stringify({ message: "Hello World" }), {
+		headers: { "content-type": "application/json" },
+		status: 200,
+	});
+
+	return NextResponse.json({ message: "Hello World" });
+}
 export async function POST(req: NextRequest) {
 	const body: Inputs = await req.json();
 	const msg = {
@@ -19,18 +30,15 @@ export async function POST(req: NextRequest) {
 		.send(msg)
 		.then(() => {
 			console.log("Email sent");
-			return NextResponse.json(
-				{ message: "Email sent" },
-				{
-					headers: { "content-type": "application/json" },
-					status: 200,
-				}
-			);
+			return new Response(JSON.stringify({ message: "Email sent" }), {
+				headers: { "content-type": "application/json" },
+				status: 200,
+			});
 		})
 		.catch((error: any) => {
 			console.log("Request Error", error);
-			return NextResponse.json(
-				{ message: "Error sending email" },
+			return new Response(
+				JSON.stringify({ message: "Error sending email" }),
 				{
 					headers: { "content-type": "application/json" },
 					status: 500,
