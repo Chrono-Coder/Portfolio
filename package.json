@@ -10,6 +10,9 @@
   },
   "dependencies": {
     "@heroicons/react": "^2.0.18",
+    "@portabletext/react": "^3.0.4",
+    "@sanity/client": "^6.1.5",
+    "@sanity/image-url": "^1.0.2",
     "@sendgrid/mail": "^7.7.0",
     "@types/node": "20.3.2",
     "@types/react": "18.2.14",
@@ -19,6 +22,7 @@
     "eslint-config-next": "13.4.7",
     "framer-motion": "^10.12.17",
     "next": "13.4.7",
+    "next-sanity": "^5.1.0",
     "postcss": "8.4.24",
     "react": "18.2.0",
     "react-dom": "18.2.0",

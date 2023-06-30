@@ -2,9 +2,13 @@
 import React from "react";
 import { SocialIcon } from "react-social-icons";
 import { motion } from "framer-motion";
-type Props = {};
+import { SocialMedia } from "@/typings";
 
-export default function Header({}: Props) {
+type Props = {
+	socialMedias: SocialMedia[];
+};
+
+export default function Header({ socialMedias }: Props) {
 	return (
 		<header className='sticky top-0 z-30 flex items-start justify-between p-5 mx-auto bg-bg-primary max-w-7xl xl:items-center'>
 			<motion.div
@@ -13,22 +17,14 @@ export default function Header({}: Props) {
 				transition={{ duration: 1.5 }}
 				className='flex items-center'
 			>
-				{/* Social Icons */}
-				<SocialIcon
-					url='https://profile.codersrank.io/user/chrono-coder'
-					fgColor='gray'
-					bgColor='transparent'
-				/>
-				<SocialIcon
-					url='https://github.com/Chrono-Coder'
-					fgColor='gray'
-					bgColor='transparent'
-				/>
-				<SocialIcon
-					url='https://www.linkedin.com/in/peter-john-hein/'
-					fgColor='gray'
-					bgColor='transparent'
-				/>
+				{socialMedias.map((socialMedia: SocialMedia) => (
+					<SocialIcon
+						key={socialMedia._id}
+						url={socialMedia.url}
+						fgColor='gray'
+						bgColor='transparent'
+					/>
+				))}
 			</motion.div>
 			<motion.div
 				initial={{ x: 500, opacity: 0, scale: 0.5 }}

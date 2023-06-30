@@ -1,9 +1,12 @@
 "use client";
 import React from "react";
 import { motion } from "framer-motion";
-type Props = {};
+type Props = {
+	backgroundInformation: string;
+	imageUrl: string;
+};
 
-export default function About({}: Props) {
+export default function About({ backgroundInformation, imageUrl }: Props) {
 	return (
 		<motion.div
 			initial={{
@@ -30,7 +33,7 @@ export default function About({}: Props) {
 				}}
 				transition={{ duration: 1.5 }}
 				viewport={{ once: true }}
-				src='/images/about.jpg'
+				src={imageUrl}
 				className='flex-shrink-0 object-cover object-top w-56 h-56 -mb-20 rounded-full md:rounded-lg md:mb-0 md:w-64 md:h-96 xl:w-[500px] xl:h-[600px]'
 			></motion.img>
 
@@ -39,14 +42,7 @@ export default function About({}: Props) {
 					Here is a little background
 				</h4>
 				<p className='text-base text-justify'>
-					As a skilled and enthusiastic programmer with a strong
-					interest in artificial intelligence and data analysis, my
-					objective is to secure a challenging role in a dynamic
-					organization where I can leverage my technical expertise and
-					leadership skills to develop innovative solutions and drive
-					business growth. I am committed to solving complex problems
-					with code, while continuously expanding my knowledge and
-					expertise in the field.
+					{backgroundInformation}
 				</p>
 			</div>
 		</motion.div>

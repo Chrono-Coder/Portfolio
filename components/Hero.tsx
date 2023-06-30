@@ -3,14 +3,17 @@ import React from "react";
 import { Cursor, useTypewriter } from "react-simple-typewriter";
 import BgCircles from "./BgCircles";
 import Image from "next/image";
-import HeroImage from "@/public/images/hero.jpg";
 import Link from "next/link";
-type Props = {};
+import { PageInfo } from "@/typings";
+import { urlFor } from "@/util/sanity";
+type Props = {
+	pageInfo: PageInfo;
+};
 
-export default function Hero({}: Props) {
+export default function Hero({ pageInfo }: Props) {
 	const [text, count] = useTypewriter({
 		words: [
-			"Peter-John Hein",
+			`Hello, I'm ${pageInfo.title}`,
 			"Full Stack Developer",
 			"#BeautifulMind",
 			"AI Enthusiast",
@@ -22,7 +25,7 @@ export default function Hero({}: Props) {
 		<div className='flex flex-col items-center justify-center h-screen space-y-8 overflow-hidden text-center'>
 			<BgCircles />
 			<Image
-				src={HeroImage}
+				src={urlFor(pageInfo?.heroImage).url()}
 				width={150}
 				height={150}
 				alt='hero'
@@ -30,7 +33,7 @@ export default function Hero({}: Props) {
 			/>
 			<div className='z-20'>
 				<h2 className='pb-2 text-sm font-bold tracking-[8px] text-white uppercase opacity-30'>
-					Computer Scientist
+					{pageInfo.role}
 				</h2>
 				<h1 className='px-10 text-5xl font-semibold lg:text-6xl'>
 					<span className='mr-3'>{text}</span>

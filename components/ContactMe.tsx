@@ -7,9 +7,13 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import sendEmail from "@/pipes/sendEmail";
 import { Inputs } from "@/typings";
 
-type Props = {};
+type Props = {
+	email: string;
+	address: string;
+	phoneNumber: string;
+};
 
-export default function ContactMe({}: Props) {
+export default function ContactMe({ email, address, phoneNumber }: Props) {
 	const { register, handleSubmit, reset } = useForm<Inputs>();
 	const onSubmit: SubmitHandler<Inputs> = (formData) => {
 		sendEmail(formData).then((res) => {
@@ -35,15 +39,15 @@ export default function ContactMe({}: Props) {
 				<div className='space-y-10'>
 					<div className='flex items-center justify-center space-x-5'>
 						<PhoneIcon className='text-primary h-7 w-7 animate-pulse' />
-						<p className='text-2xl'>+971564701952</p>
+						<p className='text-2xl'>{phoneNumber}</p>
 					</div>
 					<div className='flex items-center justify-center space-x-5'>
 						<EnvelopeIcon className='text-primary h-7 w-7 animate-pulse' />
-						<p className='text-2xl'>hein.peterjohn@gmail.com</p>
+						<p className='text-2xl'>{email}</p>
 					</div>
 					<div className='flex items-center justify-center space-x-5'>
 						<MapPinIcon className='text-primary h-7 w-7 animate-pulse' />
-						<p className='text-2xl'>Abu Dhabi, UAE</p>
+						<p className='text-2xl'>{address}</p>
 					</div>
 				</div>
 
