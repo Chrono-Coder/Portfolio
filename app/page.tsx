@@ -1,4 +1,3 @@
-"use client";
 import About from "@/components/About";
 import ContactMe from "@/components/ContactMe";
 import Header from "@/components/Header";
@@ -13,14 +12,8 @@ import {
 	Technology,
 	SocialMedia,
 } from "@/typings";
-import fetchPageInfo from "@/pipes/fetchPageInfo";
-import fetchExperiences from "@/pipes/fetchExperiences";
-import fetchProjects from "@/pipes/fetchProjects";
-import fetchTechnologies from "@/pipes/fetchTechnologies";
-import fetchSocialMedias from "@/pipes/fetchSocialMedias";
-import { urlFor } from "@/util/sanity";
-import { revalidateTime } from "@/util/helper";
-import { useEffect, useState } from "react";
+import { groq } from "next-sanity";
+import { sanityClient } from "@/util/sanity";
 
 type Props = {
 	pageInfo: PageInfo;
@@ -31,14 +24,47 @@ type Props = {
 };
 
 const fetchData = async () => {
-	const [pageInfo, experiences, projects, technologies, socialMedias] =
-		await Promise.all([
-			fetchPageInfo(),
-			fetchExperiences(),
-			fetchProjects(),
-			fetchTechnologies(),
-			fetchSocialMedias(),
-		]);
+	const fetchPageInfo = async () => {
+		const pageInfoQuery = groq`*[_type == "pageInfo"][0]`;
+		const pageInfo = await sanityClient.fetch(pageInfoQuery);
+		return pageInfo;
+	};
+	const pageInfo: PageInfo = await fetchPageInfo();
+
+	const fetchExperiences = async () => {
+		const experiencesQuery = groq`*[_type == "experience"] {
+											...,
+											technologies[]->,
+											points[]->,
+										}`;
+		const experiences = await sanityClient.fetch(experiencesQuery);
+		return experiences;
+	};
+	const experiences: Experience[] = await fetchExperiences();
+
+	const fetchProjects = async () => {
+		const projectsQuery = groq`*[_type == "project"] {
+										...,
+										technologies[]->
+									}`;
+		const projects = await sanityClient.fetch(projectsQuery);
+		return projects;
+	};
+	const projects: Project[] = await fetchProjects();
+
+	const fetchTechnologies = async () => {
+		const technologiesQuery = groq`*[_type == "skill"]`;
+		const technologies = await sanityClient.fetch(technologiesQuery);
+		return technologies;
+	};
+	const technologies: Technology[] = await fetchTechnologies();
+
+	const fetchSocialMedias = async () => {
+		const socialMediasQuery = groq`*[_type == "socialMedia"]`;
+		const socialMedias = await sanityClient.fetch(socialMediasQuery);
+		return socialMedias;
+	};
+	const socialMedias: SocialMedia[] = await fetchSocialMedias();
 
 	return {
 		pageInfo,
@@ -49,24 +75,14 @@ const fetchData = async () => {
 	};
 };
 
-export default function Home() {
-	const [socialMedias, setSocialMedias] = useState<SocialMedia[]>([]);
-	const [pageInfo, setPageInfo] = useState<PageInfo>({} as PageInfo);
-	const [experiences, setExperiences] = useState<Experience[]>([]);
-	const [projects, setProjects] = useState<Project[]>([]);
-	const [technologies, setTechnologies] = useState<Technology[]>([]);
-
-	useEffect(() => {
-		fetchData().then((data) => {
-			console.log(data);
-			setSocialMedias(data.socialMedias);
-			setPageInfo(data.pageInfo);
-			setExperiences(data.experiences);
-			setProjects(data.projects);
-			setTechnologies(data.technologies);
-		});
-	}, []);
-
+export default async function Home() {
+	const {
+		pageInfo,
+		experiences,
+		projects,
+		technologies,
+		socialMedias,
+	}: Props = await fetchData();
 	return (
 		<div className='z-0 w-screen h-screen overflow-x-hidden overflow-y-scroll text-white snap-y snap-mandatory scroll-smooth scrollbar-thin scrollbar-track-gray-400/20 scrollbar-thumb-primary/80'>
 			<Header socialMedias={socialMedias} />
@@ -74,10 +90,7 @@ export default function Home() {
 				<Hero pageInfo={pageInfo} />
 			</section>
 			<section id='about' className='snap-center'>
-				<About
-					backgroundInformation={pageInfo.backgroundInformation}
-					imageUrl={urlFor(pageInfo.profileImage).url()}
-				/>
+				<About pageInfo={pageInfo} />
 			</section>
 			<section id='experience' className='snap-center'>
 				<WorkExperience experiences={experiences} />

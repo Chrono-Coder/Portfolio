@@ -1,12 +1,13 @@
 "use client";
 import React from "react";
 import { motion } from "framer-motion";
+import { PageInfo } from "@/typings";
+import { urlFor } from "@/util/sanity";
 type Props = {
-	backgroundInformation: string;
-	imageUrl: string;
+	pageInfo: PageInfo;
 };
 
-export default function About({ backgroundInformation, imageUrl }: Props) {
+export default function About({ pageInfo }: Props) {
 	return (
 		<motion.div
 			initial={{
@@ -33,7 +34,7 @@ export default function About({ backgroundInformation, imageUrl }: Props) {
 				}}
 				transition={{ duration: 1.5 }}
 				viewport={{ once: true }}
-				src={imageUrl}
+				src={urlFor(pageInfo.profileImage).url()}
 				className='flex-shrink-0 object-cover object-top w-56 h-56 -mb-20 rounded-full md:rounded-lg md:mb-0 md:w-64 md:h-96 xl:w-[500px] xl:h-[600px]'
 			></motion.img>
 
@@ -42,7 +43,7 @@ export default function About({ backgroundInformation, imageUrl }: Props) {
 					Here is a little background
 				</h4>
 				<p className='text-base text-justify'>
-					{backgroundInformation}
+					{pageInfo.backgroundInformation}
 				</p>
 			</div>
 		</motion.div>

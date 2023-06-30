@@ -11,6 +11,7 @@ type Props = {
 };
 
 export default function Hero({ pageInfo }: Props) {
+	console.log(pageInfo);
 	const [text, count] = useTypewriter({
 		words: [
 			`Hello, I'm ${pageInfo.title}`,
@@ -25,7 +26,7 @@ export default function Hero({ pageInfo }: Props) {
 		<div className='flex flex-col items-center justify-center h-screen space-y-8 overflow-hidden text-center'>
 			<BgCircles />
 			<Image
-				src={urlFor(pageInfo?.heroImage).url()}
+				src={urlFor(pageInfo?.heroImage)?.url()}
 				width={150}
 				height={150}
 				priority
