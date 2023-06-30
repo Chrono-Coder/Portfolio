@@ -1,15 +1,17 @@
-import { NextRequest } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { Inputs } from "@/typings";
 
-// export async function GET(req: NextRequest) {
-// 	const { searchParams } = new URL(req.url);
-// 	const mysearchparam = searchParams.get("mysearchparam");
+export async function GET(req: NextRequest) {
+	const { searchParams } = new URL(req.url);
+	const mysearchparam = searchParams.get("mysearchparam");
 
-// 	return new Response(JSON.stringify({ message: "Hello World" }), {
-// 		headers: { "content-type": "application/json" },
-// 		status: 200,
-// 	});
-// }
+	return new Response(JSON.stringify({ message: "Hello World" }), {
+		headers: { "content-type": "application/json" },
+		status: 200,
+	});
+
+	return NextResponse.json({ message: "Hello World" });
+}
 export async function POST(req: NextRequest) {
 	const body: Inputs = await req.json();
 	const msg = {
