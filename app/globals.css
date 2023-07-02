@@ -36,4 +36,8 @@ body {
 	.customScrollbar {
 		@apply scrollbar scrollbar-track-gray-400/20 scrollbar-thumb-primary/80;
 	}
+	.customGrid {
+		display: grid;
+		grid-template-columns: repeat(4, minmax(64px, 1fr));
+	}
 }

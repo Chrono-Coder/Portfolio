@@ -16,7 +16,7 @@ export default function Skills({ technologies }: Props) {
 			whileInView={{ opacity: 1 }}
 			transition={{ duration: 1.5 }}
 			viewport={{ once: true }}
-			className='relative  flex flex-col items-center h-screen px-10 mx-auto text-center md:text-left xl:flex-row max-w-[2000px] xl:px-10 min-h-screen justify-center xl:space-x-0'
+			className='relative  flex flex-col items-center  px-10 mx-auto text-center md:text-left xl:flex-row max-w-[2000px] xl:px-10 min-h-screen justify-center xl:space-x-0'
 		>
 			<h3 className='font-semibold absolute top-24 uppercase tracking-[20px] text-gray-500 text-2xl'>
 				Skills
@@ -25,7 +25,7 @@ export default function Skills({ technologies }: Props) {
 				Hover over the cards to see my proficiency
 			</h3>
 
-			<div className='grid grid-cols-4 gap-5 mt-40'>
+			<div className='gap-5 sm:mt-40 sm:grid sm:gird-cols-4 customGrid'>
 				{technologies.map((technology, i) => (
 					<Skill
 						key={technology._id}

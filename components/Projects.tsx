@@ -20,7 +20,7 @@ export default function Projects({ projects }: Props) {
 			<h3 className='font-semibold absolute top-24 uppercase tracking-[20px] text-gray-500 text-2xl'>
 				Projects
 			</h3>
-			<div className='relative z-20 flex w-full overflow-x-scroll overflow-y-hidden pt-28 snap-x snap-mandatory scrollbar-thin scrollbar-track-gray-400/20 scrollbar-thumb-primary/80'>
+			<div className='relative z-20 flex w-full overflow-x-scroll overflow-y-hidden sm:pt-28 snap-x snap-mandatory scrollbar-thin scrollbar-track-gray-400/20 scrollbar-thumb-primary/80'>
 				{projects
 					.sort(
 						(a, b) =>
@@ -30,7 +30,7 @@ export default function Projects({ projects }: Props) {
 					.map((project, index) => (
 						<div
 							key={project._id}
-							className='relative flex flex-col items-center justify-center flex-shrink-0 w-screen h-screen p-20 space-y-5 snap-center md:p-44'
+							className='relative flex flex-col items-center justify-start flex-shrink-0 w-screen h-screen mt-40 space-y-5 sm:mt-0 sm:justify-center p-7 sm:p-20 snap-center md:p-44'
 						>
 							<motion.img
 								initial={{ y: -300, opacity: 0 }}
@@ -40,10 +40,11 @@ export default function Projects({ projects }: Props) {
 								src={urlFor(project.image).url()}
 								width={500}
 								height={500}
+								// className='object-cover w-40 h-40 sm:w-[500px] sm:h-[500px] rounded-3xl '
 								alt=''
 							/>
-							<div className='max-w-6xl px-0 space-y-10 md:px-10'>
-								<h4 className='text-4xl font-semibold text-center'>
+							<div className='w-full px-0 space-y-10 md:px-10'>
+								<h4 className='text-xl font-semibold text-center sm:text-4xl'>
 									<span className='underline decoration-primary/70'>
 										Project {index + 1} of {projects.length}
 										:
@@ -51,18 +52,32 @@ export default function Projects({ projects }: Props) {
 									{project.title}
 								</h4>
 								<div className='flex items-center justify-center gap-2'>
-									{project.technologies.map((technology) => (
-										<Image
-											key={technology._id}
-											src={urlFor(technology.image).url()}
-											width={40}
-											height={40}
-											alt=''
-										/>
-									))}
+									{project.technologies
+										.splice(0, 5)
+										.map((technology) => (
+											<Image
+												key={technology._id}
+												src={urlFor(
+													technology.image
+												).url()}
+												width={40}
+												height={40}
+												alt=''
+											/>
+										))}
 								</div>
 								<p className='text-lg text-center md:text-left'>
-									{project.summary}
+									<div className='xl:hidden'>
+										{project.summary.length > 200
+											? project.summary.substring(
+													0,
+													220
+											  ) + "..."
+											: project.summary}
+									</div>
+									<div className='hidden xl:inline-flex'>
+										{project.summary}
+									</div>
 								</p>
 							</div>
 						</div>

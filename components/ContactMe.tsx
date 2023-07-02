@@ -29,8 +29,8 @@ export default function ContactMe({ email, address, phoneNumber }: Props) {
 				Contact
 			</h3>
 
-			<div className='flex flex-col space-y-10'>
-				<h4 className='flex flex-col text-4xl font-semibold text-center'>
+			<div className='flex flex-col mt-20 space-y-10 xl:mt-0'>
+				<h4 className='flex flex-col text-3xl font-semibold text-center sm:text-4xl'>
 					{`I've got what you need. `}
 					<span className='underline decoration-primary/70'>
 						{`Let's Talk!`}
@@ -39,31 +39,31 @@ export default function ContactMe({ email, address, phoneNumber }: Props) {
 				<div className='space-y-10'>
 					<div className='flex items-center justify-center space-x-5'>
 						<PhoneIcon className='text-primary h-7 w-7 animate-pulse' />
-						<p className='text-2xl'>{phoneNumber}</p>
+						<p className='text-xl sm:text-2xl'>{phoneNumber}</p>
 					</div>
 					<div className='flex items-center justify-center space-x-5'>
 						<EnvelopeIcon className='text-primary h-7 w-7 animate-pulse' />
-						<p className='text-2xl'>{email}</p>
+						<p className='text-xl sm:text-2xl'>{email}</p>
 					</div>
 					<div className='flex items-center justify-center space-x-5'>
 						<MapPinIcon className='text-primary h-7 w-7 animate-pulse' />
-						<p className='text-2xl'>{address}</p>
+						<p className='text-xl sm:text-2xl'>{address}</p>
 					</div>
 				</div>
 
 				<form
-					className='flex flex-col mx-auto gap-y-2 w-fit'
+					className='flex flex-col w-screen p-5 mx-auto sm:p-0 gap-y-2 sm:w-fit'
 					onSubmit={handleSubmit(onSubmit)}
 				>
-					<div className='flex space-x-2'>
+					<div className='flex justify-center w-full gap-x-2'>
 						<input
-							className='contactInput'
+							className='w-1/2 contactInput'
 							placeholder='Name'
 							type='text'
 							{...register("name")}
 						/>
 						<input
-							className='contactInput'
+							className='w-1/2 contactInput'
 							placeholder='Email'
 							type='email'
 							{...register("email")}
