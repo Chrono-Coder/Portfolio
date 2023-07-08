@@ -5,7 +5,7 @@ import BgCircles from "./BgCircles";
 import Image from "next/image";
 import Link from "next/link";
 import { PageInfo } from "@/typings";
-import { urlFor } from "@/sanity.config";
+import { urlFor } from "@/util/helper";
 type Props = {
 	pageInfo: PageInfo;
 };

@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { motion } from "framer-motion";
+// import { motion } from "framer-motion";
 import Skill from "./Skill";
 import { Technology } from "@/typings";
 
@@ -11,11 +11,11 @@ type Props = {
 
 export default function Skills({ technologies }: Props) {
 	return (
-		<motion.div
-			initial={{ opacity: 0 }}
-			whileInView={{ opacity: 1 }}
-			transition={{ duration: 1.5 }}
-			viewport={{ once: true }}
+		<div
+			// initial={{ opacity: 0 }}
+			// whileInView={{ opacity: 1 }}
+			// transition={{ duration: 1.5 }}
+			// viewport={{ once: true }}
 			className='relative  flex flex-col items-center  px-10 mx-auto text-center md:text-left xl:flex-row max-w-[2000px] xl:px-10 min-h-screen justify-center xl:space-x-0'
 		>
 			<h3 className='font-semibold absolute top-24 uppercase tracking-[20px] text-gray-500 text-2xl'>
@@ -34,6 +34,6 @@ export default function Skills({ technologies }: Props) {
 					></Skill>
 				))}
 			</div>
-		</motion.div>
+		</div>
 	);
 }
