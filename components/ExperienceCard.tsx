@@ -1,7 +1,8 @@
+"use client";
 import Image from "next/image";
 import React from "react";
 import { Experience } from "@/typings";
-import { urlFor } from "@/util/sanity";
+import { urlFor } from "@/sanity.config";
 import { motion } from "framer-motion";
 
 type Props = {

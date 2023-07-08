@@ -3,7 +3,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { Project } from "@/typings";
-import { urlFor } from "@/util/sanity";
+import { urlFor } from "@/sanity.config";
 
 type Props = {
 	projects: Project[];

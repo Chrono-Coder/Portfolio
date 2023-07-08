@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { groq } from "next-sanity";
-import { sanityClient } from "@/util/sanity";
+import { sanityClient } from "@/sanity.config";
 import { SocialMedia } from "@/typings";
 const query = groq`*[_type == "socialMedia"]`;
 

@@ -2,7 +2,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { PageInfo } from "@/typings";
-import { urlFor } from "@/util/sanity";
+import { urlFor } from "@/sanity.config";
 type Props = {
 	pageInfo: PageInfo;
 };

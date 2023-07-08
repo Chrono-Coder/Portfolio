@@ -2,7 +2,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { Technology } from "@/typings";
-import { urlFor } from "@/util/sanity";
+import { urlFor } from "@/sanity.config";
 import Image from "next/image";
 
 type Props = {
