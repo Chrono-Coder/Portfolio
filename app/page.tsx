@@ -37,7 +37,6 @@ const fetchData = async () => {
 		const experiencesQuery = groq`*[_type == "experience"] {
 											...,
 											technologies[]->,
-											points[]->,
 										}`;
 		const experiences = await sanityClient.fetch(experiencesQuery);
 		return experiences;

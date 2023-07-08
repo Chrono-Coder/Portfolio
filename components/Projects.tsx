@@ -66,7 +66,7 @@ export default function Projects({ projects }: Props) {
 											/>
 										))}
 								</div>
-								<p className='text-lg text-center md:text-left'>
+								<div className='text-lg text-center md:text-left'>
 									<div className='xl:hidden'>
 										{project.summary.length > 200
 											? project.summary.substring(
@@ -78,7 +78,7 @@ export default function Projects({ projects }: Props) {
 									<div className='hidden xl:inline-flex'>
 										{project.summary}
 									</div>
-								</p>
+								</div>
 							</div>
 						</div>
 					))}
