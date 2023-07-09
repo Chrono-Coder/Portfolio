@@ -22,13 +22,7 @@ import {
 import { ChevronUpIcon } from "@heroicons/react/24/solid";
 import Link from "next/link";
 
-// type Props = {
-// 	pageInfo: PageInfo;
-// 	experiences: Experience[];
-// 	projects: Project[];
-// 	technologies: Technology[];
-// 	socialMedias: SocialMedia[];
-// };
+export const revalidate = 30; //
 
 export default async function Home() {
 	const pageInfo = await getPageInfo();
