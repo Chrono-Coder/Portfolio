@@ -22,7 +22,7 @@ import {
 import { ChevronUpIcon } from "@heroicons/react/24/solid";
 import Link from "next/link";
 
-export const revalidate = 30; //
+export const revalidate = 60; //
 
 export default async function Home() {
 	const pageInfo = await getPageInfo();
