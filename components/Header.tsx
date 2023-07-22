@@ -1,8 +1,9 @@
-"use client";
-import React from "react";
-import { SocialIcon } from "react-social-icons";
-import { motion } from "framer-motion";
-import { SocialMedia } from "@/typings";
+'use client';
+import React from 'react';
+import { SocialIcon } from 'react-social-icons';
+import { motion } from 'framer-motion';
+import { SocialMedia } from '@/typings';
+import Link from 'next/link';
 
 type Props = {
 	socialMedias: SocialMedia[];
@@ -21,6 +22,7 @@ export default function Header({ socialMedias }: Props) {
 					<SocialIcon
 						key={socialMedia._id}
 						url={socialMedia.url}
+						target='_blank'
 						fgColor='gray'
 						bgColor='transparent'
 					/>
@@ -33,15 +35,17 @@ export default function Header({ socialMedias }: Props) {
 				className='flex items-center text-gray-300'
 			>
 				{/* Social Icons */}
-				<SocialIcon
-					className='cursor-pointer'
-					network='email'
-					fgColor='gray'
-					bgColor='transparent'
-				/>
-				<p className='hidden text-sm text-gray-400 uppercase md:inline-flex'>
-					Get in Touch
-				</p>
+				<Link href='/#contact'>
+					<SocialIcon
+						className='cursor-pointer'
+						network='email'
+						fgColor='gray'
+						bgColor='transparent'
+					/>
+					<p className='hidden text-sm text-gray-400 uppercase md:inline-flex'>
+						Get in Touch
+					</p>
+				</Link>
 			</motion.div>
 		</header>
 	);

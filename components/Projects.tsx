@@ -1,9 +1,10 @@
-"use client";
-import React from "react";
-import { motion } from "framer-motion";
-import Image from "next/image";
-import { Project } from "@/typings";
-import { urlFor } from "@/util/helper";
+'use client';
+import React from 'react';
+import { motion } from 'framer-motion';
+import Image from 'next/image';
+import { Project } from '@/typings';
+import { urlFor } from '@/util/helper';
+import { ArrowTopRightOnSquareIcon } from '@heroicons/react/24/solid';
 
 type Props = {
 	projects: Project[];
@@ -40,44 +41,39 @@ export default function Projects({ projects }: Props) {
 								src={urlFor(project.image).url()}
 								width={500}
 								height={500}
-								// className='object-cover w-40 h-40 sm:w-[500px] sm:h-[500px] rounded-3xl '
 								alt=''
 							/>
 							<div className='w-full px-0 space-y-10 md:px-10'>
 								<h4 className='text-xl font-semibold text-center sm:text-4xl'>
 									<span className='underline decoration-primary/70'>
-										Project {index + 1} of {projects.length}
-										:
-									</span>{" "}
+										Project {index + 1} of {projects.length}:
+									</span>{' '}
 									{project.title}
+									<a
+										href={project.linkToBuild}
+										target='_blank'
+									>
+										<ArrowTopRightOnSquareIcon className='inline-block w-4 h-4 ml-2 -mb-1 text-gray-300 cursor-pointer' />
+									</a>
 								</h4>
 								<div className='flex items-center justify-center gap-2'>
-									{project.technologies
-										.splice(0, 5)
-										.map((technology) => (
-											<Image
-												key={technology._id}
-												src={urlFor(
-													technology.image
-												).url()}
-												width={40}
-												height={40}
-												alt=''
-											/>
-										))}
+									{project.technologies.splice(0, 5).map((technology) => (
+										<Image
+											key={technology._id}
+											src={urlFor(technology.image).url()}
+											width={40}
+											height={40}
+											alt=''
+										/>
+									))}
 								</div>
 								<div className='text-lg text-center md:text-left'>
 									<div className='xl:hidden'>
 										{project.summary.length > 200
-											? project.summary.substring(
-													0,
-													220
-											  ) + "..."
+											? project.summary.substring(0, 220) + '...'
 											: project.summary}
 									</div>
-									<div className='hidden xl:inline-flex'>
-										{project.summary}
-									</div>
+									<div className='hidden xl:inline-flex'>{project.summary}</div>
 								</div>
 							</div>
 						</div>
