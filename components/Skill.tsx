@@ -21,8 +21,8 @@ export default function Skill({ directionLeft, technology }: Props) {
 			/>
 			{/* {technology.title} */}
 			<div className='absolute z-0 w-16 h-16 transition duration-300 ease-in-out rounded-full opacity-0 sm:w-24 sm:h-24 group-hover:opacity-80 group-hover:bg-white md:w-28 md:h-28 xl:w-32 xl:h-32'>
-				<div className='flex items-center justify-center h-full'>
-					<p className='text-3xl font-bold text-black opacity-100'>
+				<div className='flex items-center justify-center w-full h-full'>
+					<p className='w-full overflow-hidden text-lg font-bold text-center text-black opacity-100'>
 						{technology.title}
 					</p>
 				</div>
