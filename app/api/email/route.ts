@@ -26,20 +26,11 @@ export async function POST(req: NextRequest) {
 	const sgMail = require('@sendgrid/mail');
 	sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
-	sgMail
-		.send(msg)
-		.then(() => {
-			console.log('Email sent');
-			return NextResponse.json(
-				{ message: 'Email sent', status: 200 }
-				// {
-				// 	headers: { 'content-type': 'application/json' },
-				// 	status: 200,
-				// }
-			);
-		})
-		.catch((error: any) => {
-			console.log('Request Error', error);
-			return NextResponse.json({ error: 'Error sending email', status: 500 });
-		});
+	try {
+		await sgMail.send(msg);
+		return NextResponse.json({ message: 'Email sent' }, { status: 200 });
+	} catch (error: any) {
+		console.log('Request Error', error);
+		return NextResponse.json({ message: 'Email not sent' }, { status: 500 });
+	}
 }

@@ -1,7 +1,6 @@
 import { Inputs } from '@/typings';
 
 export default async function sendEmail(msg: Inputs) {
-	console.log(msg);
 	try {
 		const response = await fetch('/api/email', {
 			mode: 'no-cors',
