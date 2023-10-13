@@ -1,76 +1,111 @@
 'use client';
 import React from 'react';
 import { motion } from 'framer-motion';
-import Image from 'next/image';
 import { Project } from '@/typings';
-import { urlFor } from '@/util/helper';
-import { ArrowTopRightOnSquareIcon } from '@heroicons/react/24/solid';
+import { useRef, useState, MouseEvent, ReactElement } from 'react';
+import ProjectCard from './ProjectCard';
 
 type Props = {
 	projects: Project[];
 };
 
 export default function Projects({ projects }: Props) {
+	// const [isDragging, setDragging] = useState(false);
+	// const [initialX, setInitialX] = useState(0);
+	// const [scrollLeft, setScrollLeft] = useState(0);
+
+	// const containerRef = useRef<HTMLDivElement | null>(null);
+	// const animationRef = useRef<number | null>(null);
+
+	// const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>): void => {
+	// 	setDragging(true);
+	// 	if (containerRef.current) {
+	// 		containerRef.current.style.cursor = 'grabbing';
+	// 		setInitialX(
+	// 			e.clientX - (containerRef.current.getBoundingClientRect().left || 0)
+	// 		);
+	// 		setScrollLeft(containerRef.current.scrollLeft);
+	// 	}
+	// };
+
+	// const handleMouseUp = (): void => {
+	// 	setDragging(false);
+	// 	if (containerRef.current) {
+	// 		containerRef.current.style.cursor = 'grab';
+	// 		startSmoothScrollAnimation();
+	// 	}
+	// };
+
+	// const handleMouseLeave = (): void => {
+	// 	setDragging(false);
+	// 	if (containerRef.current) {
+	// 		containerRef.current.style.cursor = 'grab';
+	// 	}
+	// 	startSmoothScrollAnimation();
+	// };
+
+	// const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>): void => {
+	// 	if (!isDragging) return;
+	// 	if (containerRef.current) {
+	// 		const xOffset =
+	// 			e.clientX - (containerRef.current.getBoundingClientRect().left || 0);
+	// 		const scrollX = xOffset - initialX;
+	// 		containerRef.current.scrollLeft = scrollLeft - scrollX;
+	// 	}
+	// };
+
+	// const handleTouchStart = (e: React.TouchEvent<HTMLDivElement>): void => {
+	// 	handleMouseDown(e.changedTouches[0]);
+	// };
+
+	// const handleTouchEnd = (): void => {
+	// 	handleMouseUp();
+	// };
+
+	// const handleTouchMove = (e: React.TouchEvent<HTMLDivElement>): void => {
+	// 	handleMouseMove(e.changedTouches[0]);
+	// };
+
+	// const startSmoothScrollAnimation = () => {
+	// 	if (!animationRef.current) {
+	// 		animationRef.current = requestAnimationFrame(scrollSmoothly);
+	// 	}
+	// };
+
+	// const scrollSmoothly = () => {
+	// 	if (containerRef.current) {
+	// 		const diff = containerRef.current.scrollLeft - scrollLeft;
+	// 		scrollLeft += diff * 0.1; // Adjust the speed here (0.1 is a smooth factor)
+	// 		containerRef.current.scrollLeft = scrollLeft;
+
+	// 		if (Math.abs(diff) < 0.1) {
+	// 			cancelAnimationFrame(animationRef.current as number);
+	// 			animationRef.current = null;
+	// 		} else {
+	// 			animationRef.current = requestAnimationFrame(scrollSmoothly);
+	// 		}
+	// 	}
+	// };
+
 	return (
 		<motion.div
 			initial={{ opacity: 0 }}
 			whileInView={{ opacity: 1 }}
 			transition={{ duration: 1.5 }}
-			className='relative z-0 flex flex-col items-center h-screen max-w-full mx-auto overflow-hidden text-left md:flex-row justify-evenly'
+			className='relative flex flex-col h-screen max-w-full px-10 pb-10 mx-auto overflow-hidden text-left md:flex-row justify-evenly'
 		>
 			<h3 className='font-semibold absolute top-24 uppercase tracking-[20px] text-gray-500 text-2xl'>
 				Projects
 			</h3>
-			<div className='relative z-20 flex w-full overflow-x-scroll overflow-y-hidden sm:pt-28 snap-x snap-mandatory scrollbar-thin scrollbar-track-gray-400/20 scrollbar-thumb-primary/80'>
+
+			<div className='z-20 flex w-full mt-20 overflow-x-scroll overflow-y-hidden sm:pt-28 scroll-smooth snap-x snap-mandatory scrollbar-thin scrollbar-track-gray-400/20 scrollbar-thumb-primary/80'>
 				{projects.map((project, index) => (
-					<div
+					<ProjectCard
 						key={project._id}
-						className='relative flex flex-col items-center justify-start flex-shrink-0 w-screen h-screen mt-40 space-y-5 sm:mt-0 sm:justify-center p-7 sm:p-20 snap-center md:p-44'
-					>
-						<motion.img
-							initial={{ y: -300, opacity: 0 }}
-							transition={{ duration: 1.2 }}
-							whileInView={{ y: 0, opacity: 1 }}
-							viewport={{ once: true }}
-							src={urlFor(project.image).url()}
-							width={500}
-							height={500}
-							alt=''
-						/>
-						<div className='w-full px-0 space-y-10 md:px-10'>
-							<h4 className='text-xl font-semibold text-center sm:text-4xl'>
-								<span className='underline decoration-primary/70'>
-									Project {index + 1} of {projects.length}:
-								</span>{' '}
-								{project.title}
-								<a
-									href={project.linkToBuild}
-									target='_blank'
-								>
-									<ArrowTopRightOnSquareIcon className='inline-block w-4 h-4 ml-2 -mb-1 text-gray-300 cursor-pointer' />
-								</a>
-							</h4>
-							<div className='flex items-center justify-center gap-2'>
-								{project.technologies.splice(0, 5).map((technology) => (
-									<Image
-										key={technology._id}
-										src={urlFor(technology.image).url()}
-										width={40}
-										height={40}
-										alt=''
-									/>
-								))}
-							</div>
-							<div className='text-lg text-center md:text-left'>
-								<div className='xl:hidden'>
-									{project.summary.length > 200
-										? project.summary.substring(0, 220) + '...'
-										: project.summary}
-								</div>
-								<div className='hidden xl:inline-flex'>{project.summary}</div>
-							</div>
-						</div>
-					</div>
+						project={project}
+						index={index}
+						length={projects.length}
+					/>
 				))}
 			</div>
 			<div className='w-full absolute top-[30%] bg-primary/30 left-0 h-[500px] -skew-y-12'></div>

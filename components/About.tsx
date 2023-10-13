@@ -1,8 +1,7 @@
-"use client";
-import React from "react";
-import { motion } from "framer-motion";
-import { PageInfo } from "@/typings";
-import { urlFor } from "@/util/helper";
+'use client';
+import React from 'react';
+import { motion } from 'framer-motion';
+import { PageInfo } from '@/typings';
 
 type Props = {
 	pageInfo: PageInfo;
@@ -35,14 +34,12 @@ export default function About({ pageInfo }: Props) {
 				}}
 				transition={{ duration: 1.5 }}
 				viewport={{ once: true }}
-				src={urlFor(pageInfo.profileImage).url()}
+				src={pageInfo.profileImage.asset.url}
 				className='flex-shrink-0 object-cover object-top w-56 h-56  rounded-full md:rounded-lg mt-28 md:m-0 md:w-64 md:h-96 xl:w-[500px] xl:h-[600px]'
 			></motion.img>
 
 			<div className='px-0 space-y-10 md:px-10'>
-				<h4 className='text-4xl font-semibold'>
-					Here is a little background
-				</h4>
+				<h4 className='text-4xl font-semibold'>Here is a little background</h4>
 				<p className='text-base text-justify'>
 					{pageInfo.backgroundInformation}
 				</p>

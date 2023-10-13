@@ -5,6 +5,11 @@ export type Inputs = {
 	message: string;
 };
 
+interface DerivedImage {
+	asset: {
+		url: string;
+	};
+}
 interface SanityBody {
 	_createdAt: string;
 	_id: string;
@@ -13,49 +18,49 @@ interface SanityBody {
 }
 
 interface SanityImage {
-	_type: "image";
+	_type: 'image';
 	asset: {
 		_ref: string;
-		_type: "reference";
+		_type: 'reference';
 	};
 }
 
 export interface SocialMedia extends SanityBody {
-	_type: "socialMedia";
+	_type: 'socialMedia';
 	title: string;
 	url: string;
 }
 
 export interface Project extends SanityBody {
-	_type: "project";
+	_type: 'project';
 	title: string;
 	summary: string;
 	image: SanityImage;
 	technologies: Technology[];
-	linkToBuild: "string";
+	linkToBuild: 'string';
 }
 
 export interface PageInfo extends SanityBody {
-	_type: "pageInfo";
+	_type: 'pageInfo';
 	address: string;
 	email: string;
 	role: string;
 	backgroundInformation: string;
 	title: string;
 	phoneNumber: string;
-	profileImage: SanityImage;
-	heroImage: SanityImage;
+	profileImage: DerivedImage;
+	heroImage: DerivedImage;
 }
 
 export interface Technology extends SanityBody {
-	_type: "skill";
+	_type: 'skill';
 	image: SanityImage;
 	title: string;
 	proficiency: number;
 }
 
 export interface Experience extends SanityBody {
-	_type: "experience";
+	_type: 'experience';
 	jobtitle: string;
 	companyName: string;
 	dateStarted: string;

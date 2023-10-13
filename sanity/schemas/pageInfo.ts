@@ -16,9 +16,9 @@ export default defineType({
       type: 'string',
     }),
     defineField({
-      name: "heroImage",
-      title: "Hero Image",
-      type: "image",
+      name: 'heroImage',
+      title: 'Hero Image',
+      type: 'image',
       options: {
         hotspot: true,
       },
@@ -57,7 +57,11 @@ export default defineType({
       type: 'array',
       of: [{type: 'reference', to: [{type: 'socialMedia'}]}],
     }),
-
+    defineField({
+      name: 'projects',
+      title: 'Projects',
+      type: 'array',
+      of: [{type: 'reference', to: [{type: 'project'}]}],
+    }),
   ],
-
 })

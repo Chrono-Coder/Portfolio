@@ -4,6 +4,5 @@ import project from './project'
 import skill from './skill'
 import socialMedia from './socialMedia'
 
-const schemas = [pageInfo, experience, project, skill, socialMedia]
-
-export default schemas;
+const schemaTypes = [pageInfo, experience, project, skill, socialMedia]
+export default schemaTypes
