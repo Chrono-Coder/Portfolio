@@ -40,4 +40,8 @@ body {
 		display: grid;
 		grid-template-columns: repeat(4, minmax(64px, 1fr));
 	}
+
+	.scroller::-webkit-scrollbar {
+		display: none;
+	}
 }

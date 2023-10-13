@@ -14,20 +14,21 @@ export default function Project({ project, index, length }: Props) {
 	return (
 		<div
 			key={project._id}
-			className='relative flex flex-col items-center justify-start flex-shrink-0 w-screen mb-3 space-y-5 sm:mt-0 sm:justify-center p-7 sm:p-20 snap-center'
+			className='relative flex flex-col-reverse items-center justify-start flex-shrink-0 w-screen gap-3 pb-3 mb-0 space-y-5 md:space-x-5 sm:mt-0 sm:justify-center p-7 sm:p-20 md:pb-0 snap-center md:flex-row'
 		>
-			<motion.img
-				initial={{ y: -300, opacity: 0 }}
-				transition={{ duration: 1.2 }}
-				whileInView={{ y: 0, opacity: 1 }}
-				viewport={{ once: true }}
-				src={urlFor(project.image).url()}
-				width={500}
-				height={500}
-				alt=''
-			/>
-			<div className='w-full px-0 space-y-10 md:px-10'>
-				<h4 className='text-xl font-semibold text-center sm:text-4xl'>
+			<div className='flex flex-col items-center justify-center sm:gap-y-4'>
+				<motion.img
+					initial={{ opacity: 0 }}
+					animate={{ opacity: 1 }}
+					transition={{ duration: 1.5 }}
+					src={urlFor(project.image).url()}
+					className='object-contain w-[400px] h-[300px] md:w-[600px] md:h-[500px] lg:w-[800px] lg:h-[700px]  rounded-xl'
+					alt=''
+				/>
+				{/* <div className='px-0 space-y-10 md:px-10'></div> */}
+			</div>
+			<div className='flex flex-col md:my-auto gap-10 sm:h-screen overflow-hidden text-lg text-center md:text-left md:w-[40%] md:h-[500px] '>
+				<h4 className='text-2xl font-semibold md:text-4xl'>
 					<span className='underline decoration-primary/70'>
 						Project {index + 1} of {length}:
 					</span>{' '}
@@ -39,7 +40,7 @@ export default function Project({ project, index, length }: Props) {
 						<ArrowTopRightOnSquareIcon className='inline-block w-4 h-4 ml-2 -mb-1 text-gray-300 cursor-pointer' />
 					</a>
 				</h4>
-				<div className='flex items-center justify-center gap-2'>
+				<div className='flex items-center justify-center w-full h-12 gap-2 md:justify-start'>
 					{project.technologies.splice(0, 5).map((tech) => (
 						<Image
 							key={tech._id}
@@ -51,16 +52,7 @@ export default function Project({ project, index, length }: Props) {
 						/>
 					))}
 				</div>
-				<div className='overflow-hidden text-lg text-center md:text-left'>
-					<div className='xl:hidden'>
-						{project.summary.length > 200
-							? project.summary.substring(0, 220) + '...'
-							: project.summary}
-					</div>
-					<p className='hidden overflow-hidden xl:inline-flex'>
-						{project.summary}
-					</p>
-				</div>
+				<p className='hidden md:inline-flex '>{project.summary}</p>
 			</div>
 		</div>
 	);

@@ -18,6 +18,13 @@ export default function ContactMe({ email, address, phoneNumber }: Props) {
 	const [loading, setLoading] = useState(false);
 
 	const onSubmit: SubmitHandler<Inputs> = (formData) => {
+		if (
+			!formData.email ||
+			!formData.message ||
+			!formData.name ||
+			!formData.subject
+		)
+			return;
 		setLoading(true);
 		sendEmail(formData)
 			.then((res) => {
@@ -90,7 +97,7 @@ export default function ContactMe({ email, address, phoneNumber }: Props) {
 					<button
 						type='submit'
 						disabled={loading}
-						className='px-10 py-5 text-lg font-bold text-white rounded-md bg-primary'
+						className='px-10 py-5 text-lg font-bold text-white rounded-md disabled:text-gray-500 bg-primary hover:bg-primary/80 disabled:cursor-not-allowed disabled:bg-primary/30 disabled:hover:bg-primary/30'
 					>
 						Submit
 					</button>
