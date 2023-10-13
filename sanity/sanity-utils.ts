@@ -1,35 +1,94 @@
-import {createClient, groq} from 'next-sanity'
-import {PageInfo, Experience, Project, SocialMedia, Technology} from '../typings'
-import config from './sanity.config'
-
-const client = createClient(config)
+import { createClient, groq } from 'next-sanity';
+import {
+	PageInfo,
+	Experience,
+	Project,
+	SocialMedia,
+	Technology,
+} from '@/typings';
 
 export async function getPageInfo(): Promise<PageInfo> {
-  return createClient(config).fetch(groq`*[_type == "pageInfo"][0]`)
+	const client = createClient({
+		projectId: 'psst6y6g',
+		dataset: 'production',
+		useCdn: true,
+		apiVersion: '2021-03-25',
+	});
+	return client.fetch(groq`*[_type == "pageInfo"][0]{
+        phoneNumber,
+        address,
+        email,
+        _type,
+        role,
+        heroImage {
+            asset -> {
+            url
+            }
+        },
+        profileImage {
+            asset -> {
+            url
+            }
+        },
+        backgroundInformation,
+        title,
+            _type
+        }`);
 }
 
 export async function getExperiences(): Promise<Experience[]> {
-  return createClient(config).fetch(
-    groq`*[_type == "experience"] {
+	const client = createClient({
+		projectId: 'psst6y6g',
+		dataset: 'production',
+		useCdn: true,
+		apiVersion: '2021-03-25',
+	});
+
+	return client.fetch(
+		groq`*[_type == "experience"] {
             ...,
             technologies[]->,
-        }`,
-  )
+        }`
+	);
 }
 
 export async function getProjects(): Promise<Project[]> {
-  return createClient(config).fetch(
-    groq`*[_type == "project"] {
-            ...,
-            technologies[]->
-        }`,
-  )
+	const client = createClient({
+		projectId: 'psst6y6g',
+		dataset: 'production',
+		useCdn: true,
+		apiVersion: '2021-03-25',
+	});
+
+	return client.fetch(
+		groq`*[_type == "pageInfo"][0]{
+                projects[] -> {
+                    ...,
+                    technologies[]->
+                    }
+                }.projects[]
+              `
+	);
 }
 
 export async function getTechnologies(): Promise<Technology[]> {
-  return createClient(config).fetch(groq`*[_type == "skill"]`)
+	const client = createClient({
+		projectId: 'psst6y6g',
+		dataset: 'production',
+		useCdn: true,
+		apiVersion: '2021-03-25',
+	});
+
+	return client.fetch(groq`*[_type == "skill"]`);
 }
 
 export async function getSocialMedias(): Promise<SocialMedia[]> {
-  return createClient(config).fetch(groq`*[_type == "socialMedia"]`)
+	const client = createClient({
+		projectId: 'psst6y6g',
+		dataset: 'production',
+		useCdn: true,
+		apiVersion: '2021-03-25',
+	});
+
+	return client.fetch(groq`*[_type == "socialMedia"]`);
 }

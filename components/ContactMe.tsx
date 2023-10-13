@@ -1,11 +1,11 @@
-"use client";
-import React from "react";
-import Image from "next/image";
-import { motion } from "framer-motion";
-import { PhoneIcon, MapPinIcon, EnvelopeIcon } from "@heroicons/react/24/solid";
-import { useForm, SubmitHandler } from "react-hook-form";
-import sendEmail from "@/pipes/sendEmail";
-import { Inputs } from "@/typings";
+'use client';
+import React from 'react';
+import Image from 'next/image';
+import { PhoneIcon, MapPinIcon, EnvelopeIcon } from '@heroicons/react/24/solid';
+import { useForm, SubmitHandler } from 'react-hook-form';
+import sendEmail from '@/pipes/sendEmail';
+import { Inputs } from '@/typings';
+import { useState } from 'react';
 
 type Props = {
 	email: string;
@@ -15,12 +15,19 @@ type Props = {
 
 export default function ContactMe({ email, address, phoneNumber }: Props) {
 	const { register, handleSubmit, reset } = useForm<Inputs>();
+	const [loading, setLoading] = useState(false);
+
 	const onSubmit: SubmitHandler<Inputs> = (formData) => {
-		sendEmail(formData).then((res) => {
-			console.log(res);
-			reset();
-			//Make a toast
-		});
+		setLoading(true);
+		sendEmail(formData)
+			.then((res) => {
+				reset();
+			})
+			.catch((err) => {
+				console.log(err);
+				setLoading(false);
+			});
+		setLoading(false);
 	};
 
 	return (
@@ -60,28 +67,29 @@ export default function ContactMe({ email, address, phoneNumber }: Props) {
 							className='w-1/2 contactInput'
 							placeholder='Name'
 							type='text'
-							{...register("name")}
+							{...register('name')}
 						/>
 						<input
 							className='w-1/2 contactInput'
 							placeholder='Email'
 							type='email'
-							{...register("email")}
+							{...register('email')}
 						/>
 					</div>
 					<input
 						className='contactInput'
 						placeholder='Subject'
 						type='text'
-						{...register("subject")}
+						{...register('subject')}
 					/>
 					<textarea
 						placeholder='Message'
 						className='contactInput'
-						{...register("message")}
+						{...register('message')}
 					/>
 					<button
 						type='submit'
+						disabled={loading}
 						className='px-10 py-5 text-lg font-bold text-white rounded-md bg-primary'
 					>
 						Submit

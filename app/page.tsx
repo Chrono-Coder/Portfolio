@@ -12,7 +12,7 @@ import {
 	getSocialMedias,
 	getTechnologies,
 	getExperiences,
-} from './lib/sanity';
+} from '@/sanity/sanity-utils';
 
 import { ChevronUpIcon } from '@heroicons/react/24/solid';
 import Link from 'next/link';

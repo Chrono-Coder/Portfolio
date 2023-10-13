@@ -35,13 +35,13 @@ export default function Header({ socialMedias }: Props) {
 				className='flex items-center text-gray-300'
 			>
 				{/* Social Icons */}
+				<SocialIcon
+					className='cursor-pointer'
+					network='email'
+					fgColor='gray'
+					bgColor='transparent'
+				/>
 				<Link href='/#contact'>
-					<SocialIcon
-						className='cursor-pointer'
-						network='email'
-						fgColor='gray'
-						bgColor='transparent'
-					/>
 					<p className='hidden text-sm text-gray-400 uppercase md:inline-flex'>
 						Get in Touch
 					</p>
