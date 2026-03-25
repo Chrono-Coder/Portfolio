@@ -1,7 +1,6 @@
 "use client";
 import Image from "next/image";
-import React from "react";
-import { Experience } from "@/typings";
+import type { Experience } from "@/typings";
 import { urlFor } from "@/util/helper";
 import { motion } from "framer-motion";
 
@@ -32,7 +31,7 @@ export default function ExperienceCard({ experience }: Props) {
 					{experience.companyName}
 				</p>
 				<div className='flex my-2 space-x-2'>
-					{experience.technologies.splice(0, 4).map((tech) => (
+					{experience.technologies.slice(0, 4).map((tech) => (
 						<Image
 							key={tech._id}
 							src={urlFor(tech.image).url()}

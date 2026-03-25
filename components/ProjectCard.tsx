@@ -1,5 +1,4 @@
-import React from 'react';
-import { Project } from '@/typings';
+import type { Project } from '@/typings';
 import { urlFor } from '@/util/helper';
 import { ArrowTopRightOnSquareIcon } from '@heroicons/react/24/solid';
 import { motion } from 'framer-motion';
@@ -41,7 +40,7 @@ export default function Project({ project, index, length }: Props) {
 					</a>
 				</h4>
 				<div className='flex items-center justify-center w-full h-12 gap-2 md:justify-start'>
-					{project.technologies.splice(0, 5).map((tech) => (
+					{project.technologies.slice(0, 5).map((tech) => (
 						<Image
 							key={tech._id}
 							src={urlFor(tech.image).url()}

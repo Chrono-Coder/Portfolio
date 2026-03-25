@@ -1,5 +1,4 @@
 'use client';
-import React from 'react';
 import { motion } from 'framer-motion';
 import { Project } from '@/typings';
 import ProjectCard from './ProjectCard';
@@ -11,10 +10,9 @@ type Props = {
 };
 
 export default function Projects({ projects }: Props) {
-	const scrollRef =
-		useRef<HTMLDivElement>() as React.MutableRefObject<HTMLInputElement>;
+	const scrollRef = useRef<HTMLDivElement>(null);
 
-	const { events } = useDraggable(scrollRef, {
+	const { events } = useDraggable(scrollRef as any, {
 		applyRubberBandEffect: true,
 	});
 

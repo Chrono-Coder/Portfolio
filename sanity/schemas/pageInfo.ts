@@ -1,4 +1,4 @@
-import {defineField, defineType} from 'sanity'
+import {defineArrayMember, defineField, defineType} from 'sanity'
 
 export default defineType({
   name: 'pageInfo',
@@ -19,9 +19,7 @@ export default defineType({
       name: 'heroImage',
       title: 'Hero Image',
       type: 'image',
-      options: {
-        hotspot: true,
-      },
+      options: { hotspot: true },
     }),
     defineField({
       name: 'backgroundInformation',
@@ -32,9 +30,7 @@ export default defineType({
       name: 'profileImage',
       title: 'Profile Image',
       type: 'image',
-      options: {
-        hotspot: true,
-      },
+      options: { hotspot: true },
     }),
     defineField({
       name: 'phoneNumber',
@@ -54,14 +50,14 @@ export default defineType({
     defineField({
       name: 'socialMedias',
       title: 'Social Medias',
-      type: 'array',
-      of: [{type: 'reference', to: [{type: 'socialMedia'}]}],
+      type: 'array' as const,
+      of: [defineArrayMember({type: 'reference', to: [{type: 'socialMedia'}]})],
     }),
     defineField({
       name: 'projects',
       title: 'Projects',
-      type: 'array',
-      of: [{type: 'reference', to: [{type: 'project'}]}],
+      type: 'array' as const,
+      of: [defineArrayMember({type: 'reference', to: [{type: 'project'}]})],
     }),
   ],
 })

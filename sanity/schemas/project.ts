@@ -1,4 +1,4 @@
-import {defineField, defineType} from 'sanity'
+import {defineArrayMember, defineField, defineType} from 'sanity'
 
 export default defineType({
   name: 'project',
@@ -17,12 +17,10 @@ export default defineType({
       type: 'text',
     }),
     defineField({
-      name: "image",
-      title: "Image",
-      type: "image",
-      options: {
-        hotspot: true,
-      },
+      name: 'image',
+      title: 'Image',
+      type: 'image',
+      options: { hotspot: true },
     }),
     defineField({
       name: 'linkToBuild',
@@ -32,10 +30,8 @@ export default defineType({
     defineField({
       name: 'technologies',
       title: 'Technologies',
-      type: 'array',
-      of: [{type: 'reference', to: [{type: 'skill'}]}],
+      type: 'array' as const,
+      of: [defineArrayMember({type: 'reference', to: [{type: 'skill'}]})],
     }),
-    
   ],
-
 })

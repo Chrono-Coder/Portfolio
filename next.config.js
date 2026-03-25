@@ -1,8 +1,13 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     images: {
-        domains: ['localhost', 'res.cloudinary.com', "www.drupal.org", "cdn.sanity.io"],
-    }
+        remotePatterns: [
+            { hostname: 'localhost' },
+            { hostname: 'res.cloudinary.com' },
+            { hostname: 'www.drupal.org' },
+            { hostname: 'cdn.sanity.io' },
+        ],
+    },
 }
 
 module.exports = nextConfig

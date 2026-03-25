@@ -1,4 +1,4 @@
-import {defineField, defineType} from 'sanity'
+import {defineArrayMember, defineField, defineType} from 'sanity'
 
 export default defineType({
   name: 'experience',
@@ -16,12 +16,10 @@ export default defineType({
       type: 'string',
     }),
     defineField({
-      name: "companyLogo",
-      title: "Company Image",
-      type: "image",
-      options: {
-        hotspot: true,
-      },
+      name: 'companyLogo',
+      title: 'Company Image',
+      type: 'image',
+      options: { hotspot: true },
     }),
     defineField({
       name: 'dateStarted',
@@ -32,7 +30,6 @@ export default defineType({
       name: 'dateEnded',
       title: 'Date Ended',
       type: 'string',
-   
     }),
     defineField({
       name: 'isCurrentlyWorkingThere',
@@ -42,16 +39,14 @@ export default defineType({
     defineField({
       name: 'technologies',
       title: 'Technologies',
-      type: 'array',
-      of: [{type: 'reference', to: [{type: 'skill'}]}],
+      type: 'array' as const,
+      of: [defineArrayMember({type: 'reference', to: [{type: 'skill'}]})],
     }),
     defineField({
       name: 'points',
       title: 'Points',
-      type: 'array',
-      of: [{type: 'string'}],
+      type: 'array' as const,
+      of: [defineArrayMember({type: 'string'})],
     }),
-
   ],
-
 })

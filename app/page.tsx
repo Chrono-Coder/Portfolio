@@ -1,5 +1,4 @@
 import About from '@/components/About';
-import ContactMe from '@/components/ContactMe';
 import Header from '@/components/Header';
 import Hero from '@/components/Hero';
 import Projects from '@/components/Projects';
@@ -17,7 +16,7 @@ import {
 import { ChevronUpIcon } from '@heroicons/react/24/solid';
 import Link from 'next/link';
 
-export const revalidate = 60; //
+export const revalidate = 60;
 
 export default async function Home() {
 	const pageInfo = await getPageInfo();
@@ -29,45 +28,20 @@ export default async function Home() {
 	return (
 		<div className='z-0 w-screen h-screen overflow-x-hidden overflow-y-scroll text-white snap-y snap-mandatory scroll-smooth scrollbar-thin scrollbar-track-gray-400/20 scrollbar-thumb-primary/80'>
 			<Header socialMedias={socialMedias} />
-			<section
-				id='hero'
-				className='snap-start '
-			>
+			<section id='hero' className='snap-start'>
 				<Hero pageInfo={pageInfo} />
 			</section>
-			<section
-				id='about'
-				className='snap-center'
-			>
+			<section id='about' className='snap-center'>
 				<About pageInfo={pageInfo} />
 			</section>
-			<section
-				id='skills'
-				className='snap-start'
-			>
+			<section id='skills' className='snap-start'>
 				<Skills technologies={technologies} />
 			</section>
-			<section
-				id='projects'
-				className='snap-start'
-			>
+			<section id='projects' className='snap-start'>
 				<Projects projects={projects} />
 			</section>
-			<section
-				id='experience'
-				className='snap-center'
-			>
+			<section id='experience' className='snap-center'>
 				<WorkExperience experiences={experiences} />
-			</section>
-			<section
-				id='contact'
-				className='snap-start'
-			>
-				<ContactMe
-					email={pageInfo.email}
-					phoneNumber={pageInfo.phoneNumber}
-					address={pageInfo.address}
-				/>
 			</section>
 			<div className='sticky bottom-0 flex items-center justify-center w-20 h-20 mx-auto rounded-full'>
 				<Link href='#hero'>
