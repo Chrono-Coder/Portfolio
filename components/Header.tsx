@@ -29,7 +29,7 @@ export default function Header({ socialMedias }: { socialMedias: SocialMedia[] }
 				</Link>
 
 				<nav className='hidden items-center gap-7 text-[11px] font-semibold uppercase tracking-[0.25em] text-mist-500 md:flex'>
-					{['about', 'skills', 'projects', 'experience', 'contact'].map((s) => (
+					{['about', 'projects', 'skills', 'experience', 'contact'].map((s) => (
 						<Link key={s} href={`#${s}`} className='transition-colors hover:text-primary-300'>
 							{s}
 						</Link>

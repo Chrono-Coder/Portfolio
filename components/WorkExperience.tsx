@@ -6,6 +6,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useGSAP } from '@gsap/react';
 import { Experience } from '@/typings';
 import ExperienceCard from './ExperienceCard';
+import SectionTitle from './SectionTitle';
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
@@ -57,18 +58,10 @@ export default function WorkExperience({ experiences }: { experiences: Experienc
 	);
 
 	return (
-		<div ref={root} className='section-shell py-28 md:py-36'>
-			<p data-exp-head className='label mb-4'>
-				04 — experience
-			</p>
-			<h2
-				data-exp-head
-				className='font-display text-3xl font-bold tracking-tight text-mist-100 md:text-5xl'
-			>
-				Where I&apos;ve worked<span className='text-primary-300'>.</span>
-			</h2>
+		<div ref={root} className='py-24 md:py-32'>
+<SectionTitle index='04' ghost='log' title="Where I've worked" />
 
-			<div data-timeline className='relative mt-16'>
+			<div data-timeline className='section-shell relative mt-10'>
 				<div
 					aria-hidden
 					className='absolute bottom-0 left-[7px] top-0 w-px bg-carbon-600 md:left-1/2'

@@ -7,12 +7,12 @@
    uppercase labels — kept intact; the execution modernized. */
 
 :root {
-	--bg-primary: #242424;
+	--bg-primary: #121011;
 	--maroon: #812039;
 }
 
 html {
-	background: #1c1c1c;
+	background: #0c0a0b;
 }
 
 body {
@@ -31,11 +31,11 @@ body {
 	width: 10px;
 }
 ::-webkit-scrollbar-track {
-	background: #1c1c1c;
+	background: #0c0a0b;
 }
 ::-webkit-scrollbar-thumb {
-	background: #3d3d3d;
-	border: 3px solid #1c1c1c;
+	background: #2e2a2b;
+	border: 3px solid #0c0a0b;
 	border-radius: 8px;
 }
 ::-webkit-scrollbar-thumb:hover {
@@ -93,5 +93,81 @@ body {
 		animation-iteration-count: 1 !important;
 		transition-duration: 0.01ms !important;
 		scroll-behavior: auto !important;
+	}
+}
+
+/* ── VELVET SIGNAL additions ────────────────────────────────────────────── */
+
+/* custom cursor — only on fine pointers */
+@media (pointer: fine) {
+	.cursor-dot {
+		position: fixed;
+		left: 0;
+		top: 0;
+		z-index: 200;
+		pointer-events: none;
+		width: 10px;
+		height: 10px;
+		border-radius: 9999px;
+		background: #c4566f;
+		transform: translate(-50%, -50%);
+	}
+	.cursor-ring {
+		position: fixed;
+		left: 0;
+		top: 0;
+		z-index: 199;
+		pointer-events: none;
+		width: 38px;
+		height: 38px;
+		border-radius: 9999px;
+		border: 1px solid rgba(196, 86, 111, 0.5);
+		transform: translate(-50%, -50%);
+		transition: width 0.25s ease, height 0.25s ease, border-color 0.25s ease,
+			background-color 0.25s ease;
+	}
+	.cursor-ring.is-hover {
+		width: 72px;
+		height: 72px;
+		border-color: rgba(196, 86, 111, 0.9);
+		background: rgba(129, 32, 57, 0.12);
+	}
+}
+
+/* outlined ghost type */
+.text-outline {
+	color: transparent;
+	-webkit-text-stroke: 1px rgba(168, 162, 164, 0.22);
+}
+.text-outline-maroon {
+	color: transparent;
+	-webkit-text-stroke: 1px rgba(196, 86, 111, 0.45);
+}
+
+/* hero flashlight — maroon fill revealed in a pointer-following pool */
+.flashlight {
+	color: transparent;
+	-webkit-text-stroke: 1.5px rgba(244, 241, 242, 0.35);
+}
+.flashlight-fill {
+	color: #f4f1f2;
+	-webkit-mask-image: radial-gradient(
+		220px 220px at var(--mx, 50%) var(--my, 45%),
+		black 0%,
+		black 38%,
+		transparent 72%
+	);
+	mask-image: radial-gradient(
+		220px 220px at var(--mx, 50%) var(--my, 45%),
+		black 0%,
+		black 38%,
+		transparent 72%
+	);
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.flashlight-fill {
+		-webkit-mask-image: none;
+		mask-image: none;
 	}
 }

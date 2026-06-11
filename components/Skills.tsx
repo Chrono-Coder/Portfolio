@@ -1,78 +1,72 @@
 'use client';
 
-import { useRef } from 'react';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { useGSAP } from '@gsap/react';
 import { Technology } from '@/typings';
-import Skill from './Skill';
+import Image from 'next/image';
+import { urlFor } from '@/util/helper';
+import SectionTitle from './SectionTitle';
 
-gsap.registerPlugin(ScrollTrigger, useGSAP);
-
+/**
+ * Two angled full-bleed bands: a solid maroon marquee and an outlined
+ * counter-rotating one — the stack as a statement, not a grid.
+ */
 export default function Skills({ technologies }: { technologies: Technology[] }) {
-	const root = useRef<HTMLDivElement>(null);
-	const half = Math.ceil(technologies.length / 2);
-	const rowA = technologies.slice(0, half);
-	const rowB = technologies.slice(half);
-
-	useGSAP(
-		() => {
-			const mm = gsap.matchMedia();
-			mm.add('(prefers-reduced-motion: no-preference)', () => {
-				gsap.set('[data-skills-reveal]', { y: 28, autoAlpha: 0 });
-				gsap.to('[data-skills-reveal]', {
-					y: 0,
-					autoAlpha: 1,
-					duration: 0.8,
-					ease: 'power3.out',
-					stagger: 0.1,
-					scrollTrigger: { trigger: root.current, start: 'top 72%', once: true },
-				});
-			});
-		},
-		{ scope: root },
-	);
-
+	const names = technologies.map((t) => t.title);
 	return (
-		<div ref={root} className='py-28 md:py-36'>
-			<div className='section-shell'>
-				<p data-skills-reveal className='label mb-4'>
-					02 — stack
-				</p>
-				<h2
-					data-skills-reveal
-					className='font-display text-3xl font-bold tracking-tight text-mist-100 md:text-5xl'
-				>
-					Tools I reach for<span className='text-primary-300'>.</span>
-				</h2>
+		<div className='overflow-clip py-24 md:py-32'>
+			<SectionTitle index='03' ghost='stack' title='Tools I reach for' />
+			<div className='-mx-6 mt-12 space-y-6'>
+				<div className='rotate-[-2deg] bg-primary py-4 shadow-[0_0_80px_-20px_rgba(129,32,57,0.8)]'>
+					<MarqueeText items={names} className='text-carbon-950' />
+				</div>
+				<div className='rotate-[1.5deg] border-y border-carbon-700 py-4'>
+					<MarqueeText items={names} reverse outline />
+				</div>
 			</div>
 
-			<div data-skills-reveal className='mt-14 space-y-5 overflow-hidden'>
-				<MarqueeRow items={rowA} />
-				<MarqueeRow items={rowB} reverse />
+			{/* icon strip — the actual logos, quiet under the shout */}
+			<div className='section-shell mt-16 flex flex-wrap items-center justify-center gap-x-8 gap-y-5 opacity-80'>
+				{technologies.map((t) => (
+					<Image
+						key={t._id}
+						src={urlFor(t.image).url()}
+						alt={t.title}
+						title={t.title}
+						width={34}
+						height={34}
+						className='h-8 w-8 rounded-full object-contain grayscale transition-all duration-300 hover:scale-110 hover:grayscale-0'
+					/>
+				))}
 			</div>
 		</div>
 	);
 }
 
-function MarqueeRow({ items, reverse }: { items: Technology[]; reverse?: boolean }) {
-	if (items.length === 0) return null;
+function MarqueeText({
+	items,
+	reverse,
+	outline,
+	className = '',
+}: {
+	items: string[];
+	reverse?: boolean;
+	outline?: boolean;
+	className?: string;
+}) {
 	const anim = reverse ? 'animate-marquee-reverse' : 'animate-marquee';
 	return (
-		<div className='relative overflow-hidden'>
-			<div
-				aria-hidden
-				className='pointer-events-none absolute inset-y-0 left-0 z-10 w-24 bg-gradient-to-r from-bg-primary to-transparent'
-			/>
-			<div
-				aria-hidden
-				className='pointer-events-none absolute inset-y-0 right-0 z-10 w-24 bg-gradient-to-l from-bg-primary to-transparent'
-			/>
-			<div className={`flex w-max gap-4 ${anim} hover:[animation-play-state:paused]`}>
+		<div className='overflow-hidden'>
+			<div className={`flex w-max items-center gap-8 ${anim}`}>
 				{[0, 1].map((copy) => (
-					<div key={copy} className='flex gap-4' aria-hidden={copy === 1}>
-						{items.map((t) => (
-							<Skill key={`${copy}-${t._id}`} technology={t} />
+					<div key={copy} aria-hidden={copy === 1} className='flex items-center gap-8'>
+						{items.map((n) => (
+							<span
+								key={`${copy}-${n}`}
+								className={`whitespace-nowrap font-display text-2xl font-extrabold uppercase tracking-wide md:text-4xl ${
+									outline ? 'text-outline-maroon' : className
+								}`}
+							>
+								{n} <span className='mx-2 align-middle text-base'>✦</span>
+							</span>
 						))}
 					</div>
 				))}

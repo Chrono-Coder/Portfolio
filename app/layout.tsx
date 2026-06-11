@@ -1,6 +1,7 @@
 import './globals.css';
 import { Syne, Manrope } from 'next/font/google';
 import SmoothScroll from '@/components/providers/SmoothScroll';
+import Cursor from '@/components/Cursor';
 
 const syne = Syne({ subsets: ['latin'], variable: '--font-syne' });
 const manrope = Manrope({ subsets: ['latin'], variable: '--font-manrope' });
@@ -27,6 +28,7 @@ export default function RootLayout({
 		<html lang='en' className={`${syne.variable} ${manrope.variable}`}>
 			<body className='grain min-h-screen font-sans'>
 				<SmoothScroll>{children}</SmoothScroll>
+				<Cursor />
 			</body>
 		</html>
 	);

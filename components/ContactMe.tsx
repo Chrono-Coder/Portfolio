@@ -8,6 +8,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useGSAP } from '@gsap/react';
 import sendEmail from '@/pipes/sendEmail';
 import { Inputs } from '@/typings';
+import SectionTitle from './SectionTitle';
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
@@ -54,19 +55,10 @@ export default function ContactMe({ email, address, phoneNumber }: Props) {
 	);
 
 	return (
-		<div ref={root} className='section-shell py-28 md:py-40'>
-			<p data-contact-reveal className='label mb-4'>
-				05 — contact
-			</p>
-			<h2
-				data-contact-reveal
-				className='max-w-3xl font-display text-4xl font-extrabold tracking-tight text-mist-100 md:text-6xl'
-			>
-				Let&apos;s build something
-				<span className='text-primary-300'>.</span>
-			</h2>
+		<div ref={root} className='py-24 md:py-36'>
+<SectionTitle index='05' ghost='talk' title="Let's build something" flip />
 
-			<div className='mt-14 grid gap-14 md:grid-cols-[minmax(0,340px)_1fr] md:gap-20'>
+			<div className='section-shell mt-10 grid gap-14 md:grid-cols-[minmax(0,340px)_1fr] md:gap-20'>
 				<div data-contact-reveal className='space-y-6 text-sm text-mist-400'>
 					<p className='flex items-center gap-4'>
 						<EnvelopeIcon className='h-5 w-5 text-primary-300' />

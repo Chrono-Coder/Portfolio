@@ -14,14 +14,14 @@ module.exports = {
 			},
 			colors: {
 				// the original identity, expanded into a scale
-				'bg-primary': '#242424',
-				'bg-secondary': '#333333',
+				'bg-primary': '#121011',
+				'bg-secondary': '#1a1718',
 				carbon: {
-					950: '#1c1c1c',
-					900: '#242424',
-					800: '#2d2d2d',
-					700: '#333333',
-					600: '#3d3d3d',
+					950: '#0c0a0b',
+					900: '#121011',
+					800: '#1a1718',
+					700: '#221e1f',
+					600: '#2e2a2b',
 				},
 				primary: {
 					DEFAULT: '#812039',

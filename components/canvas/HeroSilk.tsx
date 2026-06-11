@@ -210,12 +210,12 @@ export default function HeroSilk({ className }: { className?: string }) {
 				className='absolute inset-0'
 				style={{
 					background:
-						'radial-gradient(ellipse 80% 70% at 50% 45%, transparent 30%, #242424 100%)',
+						'radial-gradient(ellipse 80% 70% at 50% 45%, transparent 30%, #121011 100%)',
 				}}
 			/>
 			<div
 				className='absolute inset-x-0 bottom-0 h-44'
-				style={{ background: 'linear-gradient(to bottom, transparent, #242424)' }}
+				style={{ background: 'linear-gradient(to bottom, transparent, #121011)' }}
 			/>
 		</div>
 	);

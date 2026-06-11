@@ -27,22 +27,22 @@ export default async function Home() {
 		<div className='relative'>
 			<Header socialMedias={socialMedias} />
 			<main>
-				<section id='hero'>
+				<section id='hero' data-snap>
 					<Hero pageInfo={pageInfo} />
 				</section>
-				<section id='about' className='scroll-mt-24'>
+				<section id='about' data-snap className='scroll-mt-24'>
 					<About pageInfo={pageInfo} />
 				</section>
-				<section id='skills' className='scroll-mt-24'>
-					<Skills technologies={technologies} />
-				</section>
-				<section id='projects' className='scroll-mt-24'>
+				<section id='projects' data-snap className='scroll-mt-24'>
 					<Projects projects={projects} />
 				</section>
-				<section id='experience' className='scroll-mt-24'>
+				<section id='skills' data-snap className='scroll-mt-24'>
+					<Skills technologies={technologies} />
+				</section>
+				<section id='experience' data-snap className='scroll-mt-24'>
 					<WorkExperience experiences={experiences} />
 				</section>
-				<section id='contact' className='scroll-mt-24'>
+				<section id='contact' data-snap className='scroll-mt-24'>
 					<ContactMe
 						email={pageInfo.email}
 						address={pageInfo.address}
