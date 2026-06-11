@@ -1,59 +1,96 @@
-"use client";
-import Image from "next/image";
-import type { Experience } from "@/typings";
-import { urlFor } from "@/util/helper";
-import { motion } from "framer-motion";
+import Image from 'next/image';
+import { Experience } from '@/typings';
+import { urlFor } from '@/util/helper';
 
-type Props = {
+function fmt(date: string) {
+	if (!date) return '';
+	return new Date(date).toLocaleDateString('en-US', {
+		month: 'short',
+		year: 'numeric',
+	});
+}
+
+export default function ExperienceCard({
+	experience,
+	index,
+}: {
 	experience: Experience;
-};
-
-export default function ExperienceCard({ experience }: Props) {
+	index: number;
+}) {
+	const left = index % 2 === 0;
 	return (
-		<article className='bg-[#292929] py-12 px-6 w-full md:p-10 opacity-40 hover:opacity-100 snap-center cursor-pointer transition-opacity duration-200 overflow-hidden flex flex-col rounded-lg items-center space-y-7 flex-shrink-0 sm:w-[500px] md:w-[600px] xl:w-[700px]'>
-			<motion.img
-				initial={{
-					opacity: 0,
-					y: -100,
-				}}
-				transition={{ duration: 1.5 }}
-				whileInView={{ opacity: 1, y: 0 }}
-				viewport={{ once: true }}
-				src={urlFor(experience.companyLogo).url()}
-				width={300}
-				height={300}
-				alt=''
-				className='w-32 h-32 rounded-full xl:w-[200px] xl:h-[200px] object-cover object-center'
+		<div data-exp-card className='relative md:grid md:grid-cols-2 md:gap-16'>
+			{/* node on the spine */}
+			<span
+				aria-hidden
+				className='absolute left-[3px] top-2 h-[9px] w-[9px] rounded-full bg-primary-300 ring-4 ring-bg-primary md:left-1/2 md:-translate-x-1/2'
 			/>
-			<div className='px-0 md:px-10'>
-				<h4 className='text-4xl font-light'>{experience.jobtitle}</h4>
-				<p className='mt-1 text-2xl font-bold'>
-					{experience.companyName}
-				</p>
-				<div className='flex my-2 space-x-2'>
-					{experience.technologies.slice(0, 4).map((tech) => (
+
+			<div
+				className={`pl-8 md:pl-0 ${
+					left ? 'md:pr-4 md:text-right' : 'md:col-start-2 md:pl-4'
+				}`}
+			>
+				<div
+					className={`flex items-center gap-4 pl-0 ${
+						left ? 'md:flex-row-reverse' : ''
+					}`}
+				>
+					{experience.companyLogo && (
 						<Image
-							key={tech._id}
-							src={urlFor(tech.image).url()}
-							width={50}
-							height={50}
-							alt={tech.title}
-							className='object-contain w-10 h-10 rounded-full'
+							src={urlFor(experience.companyLogo).url()}
+							alt={experience.companyName}
+							width={48}
+							height={48}
+							className='h-12 w-12 rounded-xl border border-carbon-600 bg-carbon-800 object-contain p-1.5'
 						/>
-					))}
+					)}
+					<div>
+						<h3 className='font-display text-lg font-bold text-mist-100'>
+							{experience.jobtitle}
+						</h3>
+						<p className='text-sm text-primary-300'>{experience.companyName}</p>
+					</div>
 				</div>
-				<p className='py-5 text-gray-300 uppercase'>
-					{experience.dateStarted} -{" "}
-					{experience.isCurrentlyWorkingThere
-						? "Present"
-						: experience.dateEnded}
+
+				<p className='mt-3 text-[11px] font-semibold uppercase tracking-[0.2em] text-mist-600'>
+					{fmt(experience.dateStarted)} —{' '}
+					{experience.isCurrentlyWorkingThere ? 'present' : fmt(experience.dateEnded)}
 				</p>
-				<ul className='ml-5 space-y-4 text-lg list-disc'>
-					{experience.points.map((point, i) => (
-						<li key={i}>{point}</li>
+
+				{experience.technologies?.length > 0 && (
+					<div
+						className={`mt-4 flex flex-wrap gap-2 ${
+							left ? 'md:justify-end' : ''
+						}`}
+					>
+						{experience.technologies.map((t) => (
+							<Image
+								key={t._id}
+								src={urlFor(t.image).url()}
+								alt={t.title}
+								title={t.title}
+								width={24}
+								height={24}
+								className='h-6 w-6 rounded-full object-contain'
+							/>
+						))}
+					</div>
+				)}
+
+				<ul
+					className={`mt-5 space-y-2 text-sm leading-relaxed text-mist-400 ${
+						left ? 'md:[direction:rtl]' : ''
+					}`}
+				>
+					{experience.points?.map((point, i) => (
+						<li key={i} className='[direction:ltr]'>
+							<span className='mr-2 text-primary-300'>—</span>
+							{point}
+						</li>
 					))}
 				</ul>
 			</div>
-		</article>
+		</div>
 	);
 }

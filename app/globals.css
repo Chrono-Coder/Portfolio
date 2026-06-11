@@ -2,46 +2,96 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ── Peter-John Hein · portfolio ─────────────────────────────────────────
+   The original identity — charcoal #242424, maroon #812039, tracked
+   uppercase labels — kept intact; the execution modernized. */
+
 :root {
-	--foreground-rgb: 0, 0, 0;
-	--background-start-rgb: 214, 219, 220;
 	--bg-primary: #242424;
+	--maroon: #812039;
 }
 
-/* @media (prefers-color-scheme: none) {
-	:root {
-		--foreground-rgb: 255, 255, 255;
-		--background-start-rgb: 0, 0, 0;
-		--background-end-rgb: 0, 0, 0;
-	}
-} */
+html {
+	background: #1c1c1c;
+}
 
 body {
 	background: var(--bg-primary);
+	color: #f4f1f2;
+	overflow-x: clip;
+	-webkit-font-smoothing: antialiased;
+}
+
+::selection {
+	background: var(--maroon);
+	color: #f4f1f2;
+}
+
+::-webkit-scrollbar {
+	width: 10px;
+}
+::-webkit-scrollbar-track {
+	background: #1c1c1c;
+}
+::-webkit-scrollbar-thumb {
+	background: #3d3d3d;
+	border: 3px solid #1c1c1c;
+	border-radius: 8px;
+}
+::-webkit-scrollbar-thumb:hover {
+	background: var(--maroon);
+}
+
+:focus-visible {
+	outline: 2px solid #a83a55;
+	outline-offset: 3px;
 }
 
 @layer components {
-	.heroButton {
-		@apply px-6 py-2 border border-bg-primary rounded-full 
-		uppercase text-xs tracking-widest text-gray-500 transition-all 
-		hover:border-primary hover:text-primary;
+	/* the heritage label — tracked uppercase, refined */
+	.label {
+		@apply text-xs font-semibold uppercase tracking-[0.5em] text-mist-500;
 	}
 
+	/* heritage pill button, evolved */
+	.pill {
+		@apply rounded-full px-7 py-3 text-xs font-semibold uppercase tracking-[0.2em] transition-all duration-300;
+	}
+	.pill-solid {
+		@apply pill bg-primary text-mist-100 hover:bg-primary-400 hover:shadow-[0_8px_40px_-8px_rgba(129,32,57,0.7)];
+	}
+	.pill-ghost {
+		@apply pill border border-carbon-600 text-mist-400 hover:border-primary-400 hover:text-mist-100;
+	}
+
+	/* heritage contact input, evolved — bottom-line, maroon focus */
 	.contactInput {
-		@apply outline-none bg-slate-400/10 border-b px-6 py-4 border-bg-primary
-		text-gray-500 placeholder-gray-500 transition-all focus:border-primary/40
-		focus:text-white rounded-sm hover:border-primary/40 hover:text-primary/90;
+		@apply w-full rounded-none border-0 border-b border-carbon-600 bg-transparent px-1 py-4 text-sm text-mist-100 placeholder-mist-600 outline-none transition-colors duration-300 focus:border-primary-300 hover:border-mist-600;
 	}
 
-	.customScrollbar {
-		@apply scrollbar scrollbar-track-gray-400/20 scrollbar-thumb-primary/80;
+	.section-shell {
+		@apply mx-auto w-full max-w-6xl px-6 md:px-10;
 	}
-	.customGrid {
-		display: grid;
-		grid-template-columns: repeat(4, minmax(64px, 1fr));
-	}
+}
 
-	.scroller::-webkit-scrollbar {
-		display: none;
+/* film grain — editorial texture, very faint */
+.grain::after {
+	content: '';
+	position: fixed;
+	inset: -10%;
+	z-index: 80;
+	pointer-events: none;
+	background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+	opacity: 0.025;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	*,
+	*::before,
+	*::after {
+		animation-duration: 0.01ms !important;
+		animation-iteration-count: 1 !important;
+		transition-duration: 0.01ms !important;
+		scroll-behavior: auto !important;
 	}
 }

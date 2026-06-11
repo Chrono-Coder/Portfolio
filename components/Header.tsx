@@ -1,52 +1,54 @@
 'use client';
-import React from 'react';
-import { SocialIcon } from 'react-social-icons';
-import { motion } from 'framer-motion';
-import { SocialMedia } from '@/typings';
+
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
+import { SocialIcon } from 'react-social-icons';
+import { SocialMedia } from '@/typings';
 
-type Props = {
-	socialMedias: SocialMedia[];
-};
+export default function Header({ socialMedias }: { socialMedias: SocialMedia[] }) {
+	const [scrolled, setScrolled] = useState(false);
 
-export default function Header({ socialMedias }: Props) {
+	useEffect(() => {
+		const onScroll = () => setScrolled(window.scrollY > 24);
+		onScroll();
+		window.addEventListener('scroll', onScroll, { passive: true });
+		return () => window.removeEventListener('scroll', onScroll);
+	}, []);
+
 	return (
-		<header className='sticky top-0 z-30 flex items-start justify-between p-5 mx-auto max-w-7xl xl:items-center'>
-			<motion.div
-				initial={{ x: -500, opacity: 0, scale: 0.5 }}
-				animate={{ x: 0, opacity: 1, scale: 1 }}
-				transition={{ duration: 1.5 }}
-				className='flex items-center'
-			>
-				{socialMedias.map((socialMedia: SocialMedia) => (
-					<SocialIcon
-						key={socialMedia._id}
-						url={socialMedia.url}
-						target='_blank'
-						fgColor='gray'
-						bgColor='transparent'
-					/>
-				))}
-			</motion.div>
-			<motion.div
-				initial={{ x: 500, opacity: 0, scale: 0.5 }}
-				animate={{ x: 0, opacity: 1, scale: 1 }}
-				transition={{ duration: 1.5 }}
-				className='flex items-center text-gray-300'
-			>
-				{/* Social Icons */}
-				<SocialIcon
-					className='cursor-pointer'
-					network='email'
-					fgColor='gray'
-					bgColor='transparent'
-				/>
-				<Link href='/#contact'>
-					<p className='hidden text-sm text-gray-400 uppercase md:inline-flex'>
-						Get in Touch
-					</p>
+		<header
+			className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${
+				scrolled
+					? 'border-b border-carbon-700/80 bg-carbon-900/80 backdrop-blur-md'
+					: 'border-b border-transparent'
+			}`}
+		>
+			<div className='section-shell flex h-16 items-center justify-between'>
+				<Link href='#hero' className='font-display text-lg font-bold text-mist-100'>
+					pjh<span className='text-primary-300'>.</span>
 				</Link>
-			</motion.div>
+
+				<nav className='hidden items-center gap-7 text-[11px] font-semibold uppercase tracking-[0.25em] text-mist-500 md:flex'>
+					{['about', 'skills', 'projects', 'experience', 'contact'].map((s) => (
+						<Link key={s} href={`#${s}`} className='transition-colors hover:text-primary-300'>
+							{s}
+						</Link>
+					))}
+				</nav>
+
+				<div className='flex items-center'>
+					{socialMedias?.map((s) => (
+						<SocialIcon
+							key={s._id}
+							url={s.url}
+							target='_blank'
+							fgColor='#827c7e'
+							bgColor='transparent'
+							className='!h-9 !w-9 transition-transform hover:scale-110'
+						/>
+					))}
+				</div>
+			</div>
 		</header>
 	);
 }

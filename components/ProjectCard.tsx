@@ -1,58 +1,74 @@
-import type { Project } from '@/typings';
-import { urlFor } from '@/util/helper';
-import { ArrowTopRightOnSquareIcon } from '@heroicons/react/24/solid';
-import { motion } from 'framer-motion';
 import Image from 'next/image';
+import { Project } from '@/typings';
+import { urlFor } from '@/util/helper';
 
-type Props = {
+export default function ProjectCard({
+	project,
+	index,
+}: {
 	project: Project;
 	index: number;
-	length: number;
-};
-export default function Project({ project, index, length }: Props) {
+}) {
+	const flip = index % 2 === 1;
 	return (
-		<div
-			key={project._id}
-			className='relative flex flex-col-reverse items-center justify-start flex-shrink-0 w-screen gap-3 pb-3 mb-0 space-y-5 md:space-x-5 sm:mt-0 sm:justify-center p-7 sm:p-20 md:pb-0 snap-center md:flex-row'
+		<article
+			data-project
+			className={`grid items-center gap-8 md:grid-cols-2 md:gap-14 ${
+				flip ? 'md:[&>*:first-child]:order-2' : ''
+			}`}
 		>
-			<div className='flex flex-col items-center justify-center sm:gap-y-4'>
-				<motion.img
-					initial={{ opacity: 0 }}
-					animate={{ opacity: 1 }}
-					transition={{ duration: 1.5 }}
+			<a
+				href={project.linkToBuild || undefined}
+				target='_blank'
+				rel='noreferrer'
+				className='group relative block overflow-hidden rounded-[1.5rem] border border-carbon-600'
+			>
+				<Image
 					src={urlFor(project.image).url()}
-					className='object-contain w-[400px] h-[300px] md:w-[600px] md:h-[500px] lg:w-[800px] lg:h-[700px]  rounded-xl'
-					alt=''
+					alt={project.title}
+					width={1200}
+					height={750}
+					className='h-auto w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]'
 				/>
-				{/* <div className='px-0 space-y-10 md:px-10'></div> */}
-			</div>
-			<div className='flex flex-col md:my-auto gap-10 sm:h-screen overflow-hidden text-lg text-center md:text-left md:w-[40%] md:h-[500px] '>
-				<h4 className='text-2xl font-semibold md:text-4xl'>
-					<span className='underline decoration-primary/70'>
-						Project {index + 1} of {length}:
-					</span>{' '}
+				<div
+					aria-hidden
+					className='absolute inset-0 bg-gradient-to-t from-primary-950/70 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100'
+				/>
+				<span className='absolute bottom-4 right-5 translate-y-2 text-xs font-semibold uppercase tracking-[0.2em] text-mist-100 opacity-0 transition-all duration-500 group-hover:translate-y-0 group-hover:opacity-100'>
+					visit ↗
+				</span>
+			</a>
+
+			<div>
+				<span className='font-display text-sm font-bold text-primary-300'>
+					{String(index + 1).padStart(2, '0')}
+				</span>
+				<h3 className='mt-2 font-display text-2xl font-bold text-mist-100 md:text-3xl'>
 					{project.title}
-					<a
-						href={project.linkToBuild}
-						target='_blank'
-					>
-						<ArrowTopRightOnSquareIcon className='inline-block w-4 h-4 ml-2 -mb-1 text-gray-300 cursor-pointer' />
-					</a>
-				</h4>
-				<div className='flex items-center justify-center w-full h-12 gap-2 md:justify-start'>
-					{project.technologies.slice(0, 5).map((tech) => (
-						<Image
-							key={tech._id}
-							src={urlFor(tech.image).url()}
-							width={80}
-							height={80}
-							alt={tech.title}
-							className='object-contain w-12 h-12 rounded-full'
-						/>
-					))}
-				</div>
-				<p className='hidden md:inline-flex '>{project.summary}</p>
+				</h3>
+				<p className='mt-4 text-sm leading-relaxed text-mist-400'>
+					{project.summary}
+				</p>
+				{project.technologies?.length > 0 && (
+					<div className='mt-6 flex flex-wrap items-center gap-2'>
+						{project.technologies.map((t) => (
+							<span
+								key={t._id}
+								className='flex items-center gap-1.5 rounded-full border border-carbon-600 px-3 py-1 text-[11px] text-mist-400'
+							>
+								<Image
+									src={urlFor(t.image).url()}
+									alt={t.title}
+									width={14}
+									height={14}
+									className='h-3.5 w-3.5 rounded-full object-contain'
+								/>
+								{t.title}
+							</span>
+						))}
+					</div>
+				)}
 			</div>
-		</div>
+		</article>
 	);
 }

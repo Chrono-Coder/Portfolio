@@ -1,49 +1,88 @@
 'use client';
-import React from 'react';
-import { motion } from 'framer-motion';
+
+import { useRef } from 'react';
+import Image from 'next/image';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useGSAP } from '@gsap/react';
 import { PageInfo } from '@/typings';
+import { urlFor } from '@/util/helper';
 
-type Props = {
-	pageInfo: PageInfo;
-};
+gsap.registerPlugin(ScrollTrigger, useGSAP);
 
-export default function About({ pageInfo }: Props) {
+export default function About({ pageInfo }: { pageInfo: PageInfo }) {
+	const root = useRef<HTMLDivElement>(null);
+
+	useGSAP(
+		() => {
+			const mm = gsap.matchMedia();
+			mm.add('(prefers-reduced-motion: no-preference)', () => {
+				gsap.set('[data-about-reveal]', { y: 32, autoAlpha: 0 });
+				gsap.to('[data-about-reveal]', {
+					y: 0,
+					autoAlpha: 1,
+					duration: 0.9,
+					ease: 'power3.out',
+					stagger: 0.12,
+					scrollTrigger: { trigger: root.current, start: 'top 70%', once: true },
+				});
+				// slow parallax on the portrait
+				gsap.to('[data-about-img]', {
+					y: -40,
+					ease: 'none',
+					scrollTrigger: {
+						trigger: root.current,
+						start: 'top bottom',
+						end: 'bottom top',
+						scrub: true,
+					},
+				});
+			});
+		},
+		{ scope: root },
+	);
+
 	return (
-		<motion.div
-			initial={{
-				opacity: 0,
-			}}
-			whileInView={{
-				opacity: 1,
-			}}
-			transition={{ duration: 1.5 }}
-			className='relative flex flex-col items-center h-screen px-10 mx-auto text-center md:text-left md:flex-row max-w-7xl justify-evenly'
-		>
-			<h3 className='font-semibold absolute top-24 uppercase tracking-[20px] text-gray-500 text-2xl'>
-				About
-			</h3>
+		<div ref={root} className='section-shell grid items-center gap-14 py-28 md:grid-cols-[minmax(0,380px)_1fr] md:gap-20 md:py-40'>
+			<div data-about-reveal className='relative mx-auto w-full max-w-[340px]'>
+				<div
+					aria-hidden
+					className='absolute -inset-4 rounded-[2rem] bg-gradient-to-br from-primary/40 via-transparent to-transparent blur-2xl'
+				/>
+				{pageInfo?.profileImage?.asset?.url && (
+					<div data-about-img className='relative overflow-hidden rounded-[1.75rem] border border-carbon-600'>
+						<Image
+							src={pageInfo.profileImage.asset.url}
+							alt={pageInfo.title}
+							width={680}
+							height={840}
+							className='h-auto w-full object-cover'
+						/>
+						<div
+							aria-hidden
+							className='absolute inset-0 bg-gradient-to-t from-carbon-900/50 via-transparent to-transparent'
+						/>
+					</div>
+				)}
+			</div>
 
-			<motion.img
-				initial={{
-					x: -200,
-					opacity: 0,
-				}}
-				whileInView={{
-					x: 0,
-					opacity: 1,
-				}}
-				transition={{ duration: 1.5 }}
-				viewport={{ once: true }}
-				src={pageInfo.profileImage.asset.url}
-				className='flex-shrink-0 object-cover object-top w-56 h-56  rounded-full md:rounded-lg mt-28 md:m-0 md:w-64 md:h-96 xl:w-[500px] xl:h-[600px]'
-			></motion.img>
-
-			<div className='px-0 space-y-10 md:px-10'>
-				<h4 className='text-4xl font-semibold'>Here is a little background</h4>
-				<p className='text-base text-justify'>
-					{pageInfo.backgroundInformation}
+			<div>
+				<p data-about-reveal className='label mb-4'>
+					01 — about
+				</p>
+				<h2
+					data-about-reveal
+					className='font-display text-3xl font-bold tracking-tight text-mist-100 md:text-5xl'
+				>
+					A little background<span className='text-primary-300'>.</span>
+				</h2>
+				<p
+					data-about-reveal
+					className='mt-7 max-w-xl text-base leading-relaxed text-mist-400'
+				>
+					{pageInfo?.backgroundInformation}
 				</p>
 			</div>
-		</motion.div>
+		</div>
 	);
 }
