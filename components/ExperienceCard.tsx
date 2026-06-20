@@ -2,12 +2,12 @@ import Image from 'next/image';
 import { Experience } from '@/typings';
 import { urlFor } from '@/util/helper';
 
-function fmt(date: string) {
-	if (!date) return '';
-	return new Date(date).toLocaleDateString('en-US', {
-		month: 'short',
-		year: 'numeric',
-	});
+// The Sanity field is free-text already formatted for display ("Feb 2026",
+// "March 2024"), so render it verbatim. Re-parsing it through `new Date()`
+// caused an SSR/client hydration mismatch (Node's UTC vs the browser's local
+// timezone landed on different months).
+function fmt(date?: string) {
+	return date?.trim() ?? '';
 }
 
 export default function ExperienceCard({

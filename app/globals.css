@@ -47,6 +47,13 @@ body {
 	outline-offset: 3px;
 }
 
+/* contact inputs signal focus via the maroon underline — no box outline.
+   Unlayered so it beats the global :focus-visible rule above. */
+.contactInput:focus,
+.contactInput:focus-visible {
+	outline: none;
+}
+
 @layer components {
 	/* the heritage label — tracked uppercase, refined */
 	.label {
@@ -144,30 +151,101 @@ body {
 	-webkit-text-stroke: 1px rgba(196, 86, 111, 0.45);
 }
 
-/* hero flashlight — maroon fill revealed in a pointer-following pool */
-.flashlight {
+/* hero name — one always-visible mist→maroon gradient. Bold, readable, no mask. */
+.hero-name {
+	background: linear-gradient(176deg, #ffffff 0%, #f4f1f2 52%, #c4566f 100%);
+	-webkit-background-clip: text;
+	background-clip: text;
 	color: transparent;
-	-webkit-text-stroke: 1.5px rgba(244, 241, 242, 0.35);
+	-webkit-text-fill-color: transparent;
 }
-.flashlight-fill {
-	color: #f4f1f2;
-	-webkit-mask-image: radial-gradient(
-		220px 220px at var(--mx, 50%) var(--my, 45%),
-		black 0%,
-		black 38%,
-		transparent 72%
-	);
-	mask-image: radial-gradient(
-		220px 220px at var(--mx, 50%) var(--my, 45%),
-		black 0%,
-		black 38%,
-		transparent 72%
-	);
+
+/* ── SIGNAL — the through-line system ────────────────────────────────────── */
+
+/* full-document overlay the filament is drawn into */
+.signal-layer {
+	position: absolute;
+	inset: 0;
+	z-index: 1;
+	width: 100%;
+	pointer-events: none;
+	overflow: visible;
+}
+
+/* the drawn filament */
+.signal-path {
+	fill: none;
+	stroke: url(#signal-grad);
+	stroke-width: 2;
+	stroke-linecap: round;
+	stroke-linejoin: round;
+}
+
+/* faint full-route ghost beneath the drawn portion */
+.signal-ghost {
+	fill: none;
+	stroke: rgba(168, 58, 85, 0.12);
+	stroke-width: 1.5;
+	stroke-linecap: round;
+}
+
+/* the node riding the draw head */
+.signal-head {
+	fill: #f4f1f2;
+}
+.signal-head-halo {
+	fill: rgba(196, 86, 111, 0.9);
+}
+
+/* anchored section nodes */
+.signal-node-ring {
+	fill: none;
+	stroke: rgba(168, 58, 85, 0.45);
+	stroke-width: 1.5;
+	transition: stroke 0.4s ease;
+}
+.signal-node-dot {
+	fill: #2e2a2b;
+	transition: fill 0.4s ease, r 0.4s ease;
+}
+.signal-node.is-lit .signal-node-ring {
+	stroke: rgba(196, 86, 111, 0.95);
+}
+.signal-node.is-lit .signal-node-dot {
+	fill: #c4566f;
+}
+
+/* a quiet measurement anchor (zero footprint) the layer reads positions from */
+.signal-anchor {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	pointer-events: none;
+}
+
+/* ── horizontal projects rail ────────────────────────────────────────────── */
+
+/* native snap rail used on touch / narrow viewports */
+.rail-scroll {
+	-ms-overflow-style: none;
+	scrollbar-width: none;
+}
+.rail-scroll::-webkit-scrollbar {
+	display: none;
+}
+
+/* 3D tilt card — JS writes --rx / --ry */
+.tilt {
+	transform: perspective(900px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+	transform-style: preserve-3d;
+	will-change: transform;
+}
+.tilt-lift {
+	transform: translateZ(40px);
 }
 
 @media (prefers-reduced-motion: reduce) {
-	.flashlight-fill {
-		-webkit-mask-image: none;
-		mask-image: none;
+	.tilt {
+		transform: none;
 	}
 }

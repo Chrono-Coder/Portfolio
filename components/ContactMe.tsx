@@ -23,16 +23,19 @@ export default function ContactMe({ email, address, phoneNumber }: Props) {
 	const { register, handleSubmit, reset } = useForm<Inputs>();
 	const [loading, setLoading] = useState(false);
 	const [sent, setSent] = useState(false);
+	const [failed, setFailed] = useState(false);
 
 	const onSubmit: SubmitHandler<Inputs> = (formData) => {
 		if (!formData.email || !formData.message || !formData.name || !formData.subject)
 			return;
 		setLoading(true);
+		setFailed(false);
 		sendEmail(formData)
 			.then(() => {
 				setSent(true);
 				reset();
 			})
+			.catch(() => setFailed(true))
 			.finally(() => setLoading(false));
 	};
 
@@ -113,8 +116,19 @@ export default function ContactMe({ email, address, phoneNumber }: Props) {
 							disabled={loading}
 							className='pill-solid disabled:opacity-50'
 						>
-							{loading ? 'sending…' : sent ? 'sent ✓' : 'send message'}
+							{loading
+								? 'sending…'
+								: sent
+									? 'sent ✓'
+									: failed
+										? 'try again'
+										: 'send message'}
 						</button>
+						{failed && (
+							<p className='pt-3 text-xs text-primary-300'>
+								Something went wrong — please email me directly.
+							</p>
+						)}
 					</div>
 				</form>
 			</div>

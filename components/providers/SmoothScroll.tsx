@@ -2,15 +2,14 @@
 
 import { useEffect, useState, type ReactNode } from 'react';
 import Lenis from 'lenis';
-import Snap from 'lenis/snap';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
 
 /**
- * Lenis smooth scroll on the GSAP ticker, with proximity snap points at
- * every [data-snap] section top. Off entirely under reduced motion.
+ * Lenis smooth scroll on the GSAP ticker. Free-flowing — no section snapping.
+ * Off entirely under reduced motion.
  */
 export default function SmoothScroll({ children }: { children: ReactNode }) {
 	const [reduced, setReduced] = useState(false);
@@ -36,13 +35,6 @@ export default function SmoothScroll({ children }: { children: ReactNode }) {
 		gsap.ticker.add(tick);
 		gsap.ticker.lagSmoothing(0);
 
-		// snapping scroll — gravitate to section tops when you land near one
-		const snap = new Snap(lenis, { type: 'proximity', debounce: 350 });
-		const sections = Array.from(
-			document.querySelectorAll<HTMLElement>('[data-snap]'),
-		);
-		snap.addElements(sections, { align: ['start'] });
-
 		const onClick = (e: MouseEvent) => {
 			const link = (e.target as HTMLElement).closest<HTMLAnchorElement>(
 				'a[href^="#"]',
@@ -58,7 +50,6 @@ export default function SmoothScroll({ children }: { children: ReactNode }) {
 
 		return () => {
 			document.removeEventListener('click', onClick);
-			snap.destroy();
 			gsap.ticker.remove(tick);
 			gsap.ticker.lagSmoothing(500, 33);
 			lenis.destroy();

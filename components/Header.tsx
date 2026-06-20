@@ -7,9 +7,14 @@ import { SocialMedia } from '@/typings';
 
 export default function Header({ socialMedias }: { socialMedias: SocialMedia[] }) {
 	const [scrolled, setScrolled] = useState(false);
+	const [progress, setProgress] = useState(0);
 
 	useEffect(() => {
-		const onScroll = () => setScrolled(window.scrollY > 24);
+		const onScroll = () => {
+			setScrolled(window.scrollY > 24);
+			const max = document.documentElement.scrollHeight - window.innerHeight;
+			setProgress(max > 0 ? window.scrollY / max : 0);
+		};
 		onScroll();
 		window.addEventListener('scroll', onScroll, { passive: true });
 		return () => window.removeEventListener('scroll', onScroll);
@@ -23,6 +28,12 @@ export default function Header({ socialMedias }: { socialMedias: SocialMedia[] }
 					: 'border-b border-transparent'
 			}`}
 		>
+			{/* scroll-progress tick — the filament, distilled to a single line */}
+			<div
+				aria-hidden
+				className='absolute inset-x-0 top-0 h-px origin-left bg-gradient-to-r from-primary-500 to-primary-300'
+				style={{ transform: `scaleX(${progress})` }}
+			/>
 			<div className='section-shell flex h-16 items-center justify-between'>
 				<Link href='#hero' className='font-display text-lg font-bold text-mist-100'>
 					pjh<span className='text-primary-300'>.</span>

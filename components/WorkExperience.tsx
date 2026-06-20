@@ -17,37 +17,12 @@ export default function WorkExperience({ experiences }: { experiences: Experienc
 		() => {
 			const mm = gsap.matchMedia();
 			mm.add('(prefers-reduced-motion: no-preference)', () => {
-				gsap.set('[data-exp-head]', { y: 28, autoAlpha: 0 });
-				gsap.to('[data-exp-head]', {
-					y: 0,
-					autoAlpha: 1,
-					duration: 0.8,
-					ease: 'power3.out',
-					stagger: 0.1,
-					scrollTrigger: { trigger: root.current, start: 'top 75%', once: true },
-				});
-				// the spine grows as you scroll the timeline
-				gsap.fromTo(
-					'[data-spine]',
-					{ scaleY: 0 },
-					{
-						scaleY: 1,
-						ease: 'none',
-						transformOrigin: 'top center',
-						scrollTrigger: {
-							trigger: '[data-timeline]',
-							start: 'top 70%',
-							end: 'bottom 60%',
-							scrub: true,
-						},
-					},
-				);
 				gsap.utils.toArray<HTMLElement>('[data-exp-card]').forEach((card) => {
-					gsap.set(card, { y: 44, autoAlpha: 0 });
+					gsap.set(card, { y: 40, autoAlpha: 0 });
 					gsap.to(card, {
 						y: 0,
 						autoAlpha: 1,
-						duration: 0.9,
+						duration: 0.85,
 						ease: 'power3.out',
 						scrollTrigger: { trigger: card, start: 'top 82%', once: true },
 					});
@@ -58,19 +33,31 @@ export default function WorkExperience({ experiences }: { experiences: Experienc
 	);
 
 	return (
-		<div ref={root} className='py-24 md:py-32'>
-<SectionTitle index='04' ghost='log' title="Where I've worked" />
+		<div ref={root} className='py-20 md:py-28'>
+			<SectionTitle index='04' title="Where I've worked" />
 
 			<div data-timeline className='section-shell relative mt-10'>
-				<div
+				{/* the filament IS the spine here — anchored top & bottom so it draws
+				    straight down the timeline as one continuous line. Centre on desktop
+				    (cards alternate either side), left gutter on mobile (single column,
+				    dots sit on it). */}
+				<span
+					data-signal-node
+					data-signal-mute
+					data-signal-x='0.5'
+					data-signal-x-mobile='0.07'
+					className='signal-anchor left-1/2 top-0'
 					aria-hidden
-					className='absolute bottom-0 left-[7px] top-0 w-px bg-carbon-600 md:left-1/2'
 				/>
-				<div
-					data-spine
+				<span
+					data-signal-node
+					data-signal-mute
+					data-signal-x='0.5'
+					data-signal-x-mobile='0.07'
+					className='signal-anchor bottom-0 left-1/2'
 					aria-hidden
-					className='absolute bottom-0 left-[7px] top-0 w-px bg-primary-400 shadow-[0_0_12px_rgba(168,58,85,0.6)] md:left-1/2'
 				/>
+
 				<div className='space-y-14 md:space-y-20'>
 					{experiences?.map((exp, i) => (
 						<ExperienceCard key={exp._id} experience={exp} index={i} />
